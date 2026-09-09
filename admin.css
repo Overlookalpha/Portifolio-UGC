@@ -1,12 +1,27 @@
 /*
   ============================================================================
   ADMIN.CSS — Painel administrativo (mobile-first)
-  Reaproveita as variáveis de cor/fonte/espaçamento definidas em styles.css.
+  Reaproveita as variáveis de fonte/espaçamento definidas em styles.css.
   Não altera nenhuma regra existente do site público.
   ============================================================================
 */
 
+/* O site público (styles.css) usa um tema claro/off-white. O painel admin
+   mantém o próprio tema escuro, redeclarando as variáveis de cor aqui —
+   assim uma reformulação visual do site público nunca muda a aparência
+   (já testada e funcionando) do painel administrativo. */
 .admin-body {
+  --bg: #0b0b0d;
+  --bg-elevated: #151517;
+  --bg-elevated-2: #1c1c1f;
+  --text: #f6f4ef;
+  --text-muted: #a6a39c;
+  --text-faint: #716f6a;
+  --accent: #d8c9a3;
+  --accent-strong: #e8dcb9;
+  --border: rgba(246, 244, 239, 0.1);
+  --border-strong: rgba(246, 244, 239, 0.18);
+
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);

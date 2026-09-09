@@ -209,8 +209,10 @@ var SITE_CONFIG = {
   // --------------------------------------------------------------------
   // RESULTADOS / MÉTRICAS — seção opcional; deixe mostrarMetricas: false
   // pra ocultar completamente até ter números reais pra mostrar.
+  // Por padrão fica desligada pra manter a página mais enxuta (menos é
+  // mais) — mude pra true quando quiser mostrar essa seção de novo.
   // --------------------------------------------------------------------
-  mostrarMetricas: true,
+  mostrarMetricas: false,
   metricas: [
     { numero: "00+", rotulo: "Vídeos produzidos" },
     { numero: "00+", rotulo: "Marcas atendidas" },
@@ -229,6 +231,6 @@ var SITE_CONFIG = {
   // --------------------------------------------------------------------
   // COR-TEMA (usada no manifest.webmanifest e no <meta theme-color>)
   // --------------------------------------------------------------------
-  corTema: "#0b0b0d",
-  corFundo: "#0b0b0d"
+  corTema: "#f7f5f0",
+  corFundo: "#f7f5f0"
 };

@@ -23,10 +23,10 @@
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0b0b0d">
+<meta name="theme-color" content="#f7f5f0">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Creator">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
@@ -44,23 +44,27 @@
 <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
 
 <header class="site-header" id="site-header">
-  <div class="container header-inner">
-    <a href="#hero" class="brand" id="brand-nome">Nome da Creator</a>
+  <div class="container">
+    <div class="header-capsule">
+      <a href="#hero" class="brand" id="brand-nome">Nome da Creator</a>
 
-    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-      <ul>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#portfolio-videos">Vídeos</a></li>
-        <li><a href="#galeria">Fotos</a></li>
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#marcas">Marcas</a></li>
-        <li><a href="#contato" class="nav-cta">Trabalhe comigo</a></li>
-      </ul>
-    </nav>
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="#portfolio-videos">Vídeos</a></li>
+          <li><a href="#galeria">Fotos</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#marcas">Marcas</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+        </ul>
+      </nav>
 
-    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
-      <span></span><span></span><span></span>
-    </button>
+      <div class="header-actions">
+        <a href="#contato" class="btn-contato">Contato</a>
+        <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -68,35 +72,15 @@
 
   <!-- ============================= HERO ============================= -->
   <section class="hero" id="hero">
-    <div class="hero-media">
-      <img id="hero-foto" src="images/hero-placeholder.svg" alt="" role="presentation">
-      <div class="hero-media-overlay"></div>
-    </div>
-    <div class="container hero-content" data-reveal>
-      <p class="eyebrow">UGC Creator</p>
-      <h1 id="hero-nome">Nome da Creator</h1>
-      <p class="hero-frase" id="hero-frase">Conteúdo autêntico que transforma produtos em experiências.</p>
-      <div class="hero-actions">
-        <a href="#portfolio-videos" class="btn btn-primary">Ver meu portfólio</a>
-        <a href="#contato" class="btn btn-ghost">Trabalhe comigo</a>
+    <div class="container hero-grid">
+      <div class="hero-text" data-reveal>
+        <p class="eyebrow">UGC Creator</p>
+        <h1 id="hero-nome">Nome da Creator<span class="hero-dot">.</span></h1>
+        <p class="hero-frase" id="hero-frase">Conteúdo autêntico que transforma produtos em experiências.</p>
+        <a href="#portfolio-videos" class="btn btn-primary">Ver portfólio</a>
       </div>
-    </div>
-    <a href="#sobre" class="scroll-cue" aria-label="Rolar para a próxima seção">
-      <span></span>
-    </a>
-  </section>
-
-  <!-- ============================= SOBRE ============================= -->
-  <section class="sobre" id="sobre">
-    <div class="container sobre-grid">
-      <div class="sobre-media" data-reveal>
-        <img id="sobre-foto" src="images/sobre-placeholder.svg" alt="Foto de apresentação" loading="lazy">
-      </div>
-      <div class="sobre-texto-wrap" data-reveal>
-        <p class="eyebrow">Sobre mim</p>
-        <h2>Quem cria esse conteúdo</h2>
-        <div id="sobre-texto" class="sobre-texto"></div>
-        <ul id="sobre-destaques" class="sobre-destaques"></ul>
+      <div class="hero-media" data-reveal>
+        <img id="hero-foto" src="images/hero-placeholder.svg" alt="" role="presentation">
       </div>
     </div>
   </section>
@@ -139,17 +123,6 @@
     </div>
   </section>
 
-  <!-- =========================== COMO FUNCIONA =========================== -->
-  <section class="processo" id="processo">
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">Como funciona</p>
-        <h2>Do primeiro contato à publicação</h2>
-      </div>
-      <ol class="processo-grid" id="processo-grid" data-reveal></ol>
-    </div>
-  </section>
-
   <!-- ============================== MARCAS ============================== -->
   <section class="marcas" id="marcas">
     <div class="container">
@@ -161,8 +134,23 @@
     </div>
   </section>
 
+  <!-- ============================= SOBRE ============================= -->
+  <section class="sobre" id="sobre">
+    <div class="container sobre-grid">
+      <div class="sobre-media" data-reveal>
+        <img id="sobre-foto" src="images/sobre-placeholder.svg" alt="Foto de apresentação" loading="lazy">
+      </div>
+      <div class="sobre-texto-wrap" data-reveal>
+        <p class="eyebrow">Sobre mim</p>
+        <h2>Quem cria esse conteúdo</h2>
+        <div id="sobre-texto" class="sobre-texto"></div>
+        <ul id="sobre-destaques" class="sobre-destaques"></ul>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================ RESULTADOS ============================ -->
-  <section class="resultados" id="resultados">
+  <section class="resultados" id="resultados" hidden>
     <div class="container">
       <div class="resultados-grid" id="resultados-grid" data-reveal></div>
     </div>

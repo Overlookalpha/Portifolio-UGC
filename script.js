@@ -217,7 +217,10 @@
 
     var fotoEl = $("#hero-foto");
     if (fotoEl && cfg.sobre && cfg.sobre.foto) {
-      // usa a mesma imagem de destaque se não houver uma específica de hero
+      // usa a mesma imagem de "Sobre" no hero, já que não existe um campo
+      // dedicado de foto de capa em config.js — evita repetir um placeholder
+      // genérico na primeira tela do site.
+      fotoEl.src = cfg.sobre.foto;
       fotoEl.alt = "Foto de " + (cfg.nome || "capa do portfólio");
     }
   }
