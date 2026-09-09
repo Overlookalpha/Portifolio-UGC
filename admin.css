@@ -42,6 +42,15 @@
   padding: 1.5rem;
 }
 
+/* o atributo "hidden" sozinho perde pra qualquer "display" declarado aqui
+   em cima (mesma especificidade, mas essa regra de autor vem depois) —
+   por isso essas duas linhas garantem que a tela realmente some quando
+   o JS marca ela como hidden (login <-> painel depois de entrar/sair). */
+.admin-login[hidden],
+.admin-painel[hidden] {
+  display: none;
+}
+
 .admin-login-box {
   width: 100%;
   max-width: 380px;
