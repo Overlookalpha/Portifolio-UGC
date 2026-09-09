@@ -14,7 +14,7 @@
   ============================================================================
 */
 
-var CACHE_VERSAO = "v1";
+var CACHE_VERSAO = "v2";
 var CACHE_ESSENCIAL = "ugc-portfolio-essencial-" + CACHE_VERSAO;
 var CACHE_RUNTIME = "ugc-portfolio-runtime-" + CACHE_VERSAO;
 
