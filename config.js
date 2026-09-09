@@ -30,6 +30,18 @@ var SITE_CONFIG = {
   idioma: "pt-BR",
 
   // --------------------------------------------------------------------
+  // SUPABASE — conexao com o banco de dados e o armazenamento de midia
+  // usada pelo painel admin (admin.html) e pelo site publico pra buscar
+  // as fotos/videos cadastrados por la. A chave abaixo e publica por
+  // design (protegida por Row Level Security no Supabase), pode ficar
+  // exposta no codigo do site sem problema.
+  // --------------------------------------------------------------------
+  supabase: {
+    url: "https://ssupfptuimjgrlurcotu.supabase.co",
+    anonKey: "sb_publishable_792PihP-YFAe8e06zis3XA_tdXgobVm"
+  },
+
+  // --------------------------------------------------------------------
   // CONTATO
   // --------------------------------------------------------------------
   contato: {
@@ -135,6 +147,15 @@ var SITE_CONFIG = {
   // --------------------------------------------------------------------
   // GALERIA DE FOTOS
   // --------------------------------------------------------------------
+  // categoria deve ser uma das chaves de CATEGORIAS_FOTO abaixo.
+  categoriasFoto: [
+    { chave: "lifestyle", rotulo: "Lifestyle" },
+    { chave: "produto", rotulo: "Produto" },
+    { chave: "beleza", rotulo: "Beleza" },
+    { chave: "viagem", rotulo: "Viagem" },
+    { chave: "gastronomia", rotulo: "Gastronomia" }
+  ],
+
   // Para adicionar uma foto nova, copie um bloco { ... } e edite.
   fotos: [
     { legenda: "Foto placeholder 1", categoria: "lifestyle", imagem: "images/gallery/placeholder-1.svg" },

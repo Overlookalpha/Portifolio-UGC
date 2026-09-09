@@ -35,6 +35,85 @@
     setupModal();
     setupInstallPrompt();
     registrarServiceWorker();
+
+    atualizarMidiasComSupabase();
+  }
+
+  // ------------------------------------------------------------------
+  // Mídias reais cadastradas no painel admin (Supabase)
+  // ------------------------------------------------------------------
+  // Busca fotos/vídeos reais do banco (tabela "midias", alimentada pelo
+  // admin.html) e, se encontrar algo, substitui os placeholders de
+  // config.js e re-renderiza as seções de vídeo e galeria. Se o Supabase
+  // não estiver configurado, a biblioteca não carregar (ex: offline) ou
+  // ainda não houver nenhuma mídia cadastrada, o site continua mostrando
+  // o conteúdo padrão de config.js normalmente — nada quebra.
+  function buscarMidiasDoSupabase() {
+    if (!cfg.supabase || !cfg.supabase.url || !cfg.supabase.anonKey) {
+      return Promise.resolve(null);
+    }
+    if (typeof window.supabase === "undefined") {
+      return Promise.resolve(null);
+    }
+
+    var cliente = window.supabase.createClient(cfg.supabase.url, cfg.supabase.anonKey);
+
+    return cliente
+      .from("midias")
+      .select("*")
+      .order("ordem", { ascending: true })
+      .then(function (resposta) {
+        if (resposta.error || !Array.isArray(resposta.data)) return null;
+
+        var linhas = resposta.data;
+
+        var videos = linhas
+          .filter(function (m) {
+            return m.tipo === "video";
+          })
+          .map(function (m) {
+            return {
+              titulo: m.titulo || "",
+              categoria: m.categoria || "",
+              marca: m.marca || "",
+              descricao: m.descricao || "",
+              thumbnail: m.thumbnail_url || m.arquivo_url || "",
+              video: m.arquivo_url || "",
+              destaque: !!m.destaque
+            };
+          });
+
+        var fotos = linhas
+          .filter(function (m) {
+            return m.tipo === "foto";
+          })
+          .map(function (m) {
+            return {
+              legenda: m.titulo || "",
+              categoria: m.categoria || "",
+              imagem: m.arquivo_url || m.thumbnail_url || "",
+              destaque: !!m.destaque
+            };
+          });
+
+        if (!videos.length && !fotos.length) return null;
+
+        return { videos: videos, fotos: fotos };
+      });
+  }
+
+  function atualizarMidiasComSupabase() {
+    buscarMidiasDoSupabase()
+      .then(function (dados) {
+        if (!dados) return;
+        if (Array.isArray(dados.videos)) cfg.videos = dados.videos;
+        if (Array.isArray(dados.fotos)) cfg.fotos = dados.fotos;
+        renderVideos();
+        renderGaleria();
+      })
+      .catch(function () {
+        // mantem o conteudo padrao de config.js caso a busca falhe
+      });
   }
 
   // ------------------------------------------------------------------

@@ -733,6 +733,9 @@ section:not(.hero) {
 }
 .footer-links a:hover { color: var(--accent); }
 .footer-copy { color: var(--text-faint); font-size: 0.78rem; }
+.footer-admin-link { margin-top: -0.75rem; }
+.footer-admin-link a { color: var(--text-faint); font-size: 0.72rem; text-decoration: underline; text-underline-offset: 2px; }
+.footer-admin-link a:hover { color: var(--accent); }
 
 @media (min-width: 720px) {
   .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; }
