@@ -1,5 +1,6 @@
 -- Execute este ficheiro uma vez no SQL Editor do projeto Supabase.
 -- A tabela guarda o conteúdo textual do editor visual como um único documento.
+
 create table if not exists public.conteudo_site (
   id text primary key default 'principal',
   dados jsonb not null default '{}'::jsonb,
