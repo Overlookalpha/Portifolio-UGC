@@ -37,6 +37,7 @@
     registrarServiceWorker();
 
     atualizarMidiasComSupabase();
+    atualizarConteudoComSupabase();
   }
 
   // ------------------------------------------------------------------
@@ -114,6 +115,33 @@
       .catch(function () {
         // mantem o conteudo padrao de config.js caso a busca falhe
       });
+  }
+
+  // Conteúdos do editor visual. A página continua usando config.js como
+  // fallback caso a tabela ainda não exista ou a ligação esteja indisponível.
+  function atualizarConteudoComSupabase() {
+    if (!cfg.supabase || !cfg.supabase.url || !cfg.supabase.anonKey || typeof window.supabase === "undefined") return;
+    var cliente = window.supabase.createClient(cfg.supabase.url, cfg.supabase.anonKey);
+    cliente.from("conteudo_site").select("dados").eq("id", "principal").maybeSingle()
+      .then(function (resposta) {
+        if (resposta.error || !resposta.data || !resposta.data.dados) return;
+        var dados = resposta.data.dados;
+        cfg.nome = dados.nome || cfg.nome;
+        cfg.titulo = dados.titulo || cfg.titulo;
+        cfg.fraseDeImpacto = dados.fraseDeImpacto || cfg.fraseDeImpacto;
+        cfg.contato = cfg.contato || {};
+        cfg.contato.email = dados.email || cfg.contato.email;
+        cfg.contato.whatsapp = dados.whatsapp || cfg.contato.whatsapp;
+        cfg.contato.instagram = dados.instagram || cfg.contato.instagram;
+        cfg.sobre = cfg.sobre || {};
+        if (dados.foto) cfg.sobre.foto = dados.foto;
+        if (dados.sobre) cfg.sobre.texto = dados.sobre.split(/\n\s*\n/).filter(Boolean);
+        cfg.cta = cfg.cta || {};
+        cfg.cta.titulo = dados.ctaTitulo || cfg.cta.titulo;
+        cfg.cta.texto = dados.ctaTexto || cfg.cta.texto;
+        aplicarMetaBasica(); renderHeaderFooter(); renderHero(); renderSobre(); renderCTA();
+      })
+      .catch(function () { /* fallback local permanece visível */ });
   }
 
   // ------------------------------------------------------------------

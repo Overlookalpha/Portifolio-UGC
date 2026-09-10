@@ -16,7 +16,8 @@
   var BUCKET = "midias";
 
   var cache = { videos: [], fotos: [] };
-  var abaAtiva = "videos";
+  var abaAtiva = "pagina";
+  var conteudoAtual = null;
 
   document.addEventListener("DOMContentLoaded", init);
 
@@ -32,6 +33,7 @@
     wireSair();
     wireAbas();
     wireAdicionar();
+    wireEditorPagina();
 
     sb.auth.getSession().then(function (resposta) {
       var sessao = resposta && resposta.data ? resposta.data.session : null;
@@ -159,6 +161,7 @@
     $("#tela-login").hidden = true;
     $("#tela-painel").hidden = false;
     carregarMidias();
+    carregarConteudoPagina();
   }
 
   // ------------------------------------------------------------------
@@ -177,6 +180,66 @@
           secao.hidden = secao.dataset.secao !== abaAtiva;
         });
       });
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Editor espelho: conteúdo textual persistido no Supabase
+  // ------------------------------------------------------------------
+  function dadosPadraoPagina() {
+    return {
+      nome: cfg.nome || "",
+      titulo: cfg.titulo || "",
+      fraseDeImpacto: cfg.fraseDeImpacto || "",
+      foto: (cfg.sobre && cfg.sobre.foto) || "",
+      sobre: (cfg.sobre && cfg.sobre.texto || []).join("\n\n"),
+      email: (cfg.contato && cfg.contato.email) || "",
+      whatsapp: (cfg.contato && cfg.contato.whatsapp) || "",
+      instagram: (cfg.contato && cfg.contato.instagram) || "",
+      ctaTitulo: (cfg.cta && cfg.cta.titulo) || "",
+      ctaTexto: (cfg.cta && cfg.cta.texto) || ""
+    };
+  }
+
+  function preencherEditorPagina(dados) {
+    var mapa = { nome: "pagina-nome", titulo: "pagina-titulo", fraseDeImpacto: "pagina-frase", foto: "pagina-foto", sobre: "pagina-sobre", email: "pagina-email", whatsapp: "pagina-whatsapp", instagram: "pagina-instagram", ctaTitulo: "pagina-cta-titulo", ctaTexto: "pagina-cta-texto" };
+    Object.keys(mapa).forEach(function (chave) {
+      var campo = $("#" + mapa[chave]);
+      if (campo) campo.value = dados[chave] || "";
+    });
+  }
+
+  function carregarConteudoPagina() {
+    sb.from("conteudo_site").select("dados").eq("id", "principal").maybeSingle()
+      .then(function (resposta) {
+        conteudoAtual = dadosPadraoPagina();
+        if (!resposta.error && resposta.data && resposta.data.dados) {
+          Object.keys(resposta.data.dados).forEach(function (chave) { conteudoAtual[chave] = resposta.data.dados[chave]; });
+        }
+        preencherEditorPagina(conteudoAtual);
+      });
+  }
+
+  function wireEditorPagina() {
+    var form = $("#form-pagina");
+    if (!form) return;
+    form.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      var dados = {
+        nome: $("#pagina-nome").value.trim(), titulo: $("#pagina-titulo").value.trim(), fraseDeImpacto: $("#pagina-frase").value.trim(), foto: $("#pagina-foto").value.trim(), sobre: $("#pagina-sobre").value.trim(), email: $("#pagina-email").value.trim(), whatsapp: $("#pagina-whatsapp").value.replace(/\D/g, ""), instagram: $("#pagina-instagram").value.trim(), ctaTitulo: $("#pagina-cta-titulo").value.trim(), ctaTexto: $("#pagina-cta-texto").value.trim()
+      };
+      var botao = form.querySelector('button[type="submit"]');
+      botao.disabled = true;
+      sb.from("conteudo_site").upsert({ id: "principal", dados: dados, atualizado_em: new Date().toISOString() })
+        .then(function (resposta) {
+          botao.disabled = false;
+          if (resposta.error) { mostrarToast("Erro ao salvar página: " + resposta.error.message, true); return; }
+          conteudoAtual = dados;
+          var preview = $("#preview-site");
+          if (preview) preview.src = "index.html?atualizado=" + Date.now();
+          mostrarToast("Página salva e prévia atualizada!");
+        })
+        .catch(function () { botao.disabled = false; mostrarToast("Não foi possível salvar a página.", true); });
     });
   }
 

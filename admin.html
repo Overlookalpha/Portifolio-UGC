@@ -56,13 +56,51 @@
     <button type="button" class="admin-btn-sair" id="btn-sair">Sair</button>
   </header>
 
-  <nav class="admin-abas" role="tablist" aria-label="Tipo de mídia">
-    <button type="button" class="admin-aba is-ativa" id="aba-videos" data-aba="videos" role="tab" aria-selected="true">Vídeos</button>
+  <nav class="admin-abas" role="tablist" aria-label="Área de edição">
+    <button type="button" class="admin-aba is-ativa" id="aba-pagina" data-aba="pagina" role="tab" aria-selected="true">Página</button>
+    <button type="button" class="admin-aba" id="aba-videos" data-aba="videos" role="tab" aria-selected="false">Vídeos</button>
     <button type="button" class="admin-aba" id="aba-fotos" data-aba="fotos" role="tab" aria-selected="false">Fotos</button>
   </nav>
 
+  <!-- ---- PÁGINA / EDITOR ESPELHO ---- -->
+  <section class="admin-secao admin-secao-pagina" id="secao-pagina" data-secao="pagina">
+    <div class="admin-editor-intro">
+      <p class="eyebrow">Editor visual</p>
+      <h2>Edite o que a marca vê.</h2>
+      <p>O lado direito é o seu site público. Altere os campos e salve: a prévia é atualizada com o mesmo conteúdo publicado.</p>
+    </div>
+    <div class="admin-editor-layout">
+      <form class="admin-form-pagina" id="form-pagina">
+        <fieldset>
+          <legend>Identidade</legend>
+          <label class="admin-campo"><span>Nome</span><input id="pagina-nome" type="text" maxlength="80" required></label>
+          <label class="admin-campo"><span>Título</span><input id="pagina-titulo" type="text" maxlength="80"></label>
+          <label class="admin-campo"><span>Frase de impacto</span><textarea id="pagina-frase" rows="3" maxlength="220"></textarea></label>
+          <label class="admin-campo"><span>Foto de perfil — URL</span><input id="pagina-foto" type="url" placeholder="https://..."></label>
+        </fieldset>
+        <fieldset>
+          <legend>Sobre e contacto</legend>
+          <label class="admin-campo"><span>Apresentação</span><textarea id="pagina-sobre" rows="6"></textarea></label>
+          <label class="admin-campo"><span>E-mail</span><input id="pagina-email" type="email"></label>
+          <label class="admin-campo"><span>WhatsApp (só números)</span><input id="pagina-whatsapp" inputmode="numeric"></label>
+          <label class="admin-campo"><span>Instagram — URL</span><input id="pagina-instagram" type="url" placeholder="https://instagram.com/..." ></label>
+        </fieldset>
+        <fieldset>
+          <legend>Convite final</legend>
+          <label class="admin-campo"><span>Título</span><input id="pagina-cta-titulo" type="text" maxlength="140"></label>
+          <label class="admin-campo"><span>Texto</span><textarea id="pagina-cta-texto" rows="4"></textarea></label>
+        </fieldset>
+        <button type="submit" class="btn btn-primary admin-btn-full">Salvar e atualizar prévia</button>
+      </form>
+      <aside class="admin-preview-wrap" aria-label="Prévia do site público">
+        <div class="admin-preview-top"><span>Prévia pública</span><a href="index.html" target="_blank" rel="noopener">Abrir site ↗</a></div>
+        <iframe id="preview-site" title="Prévia do portfólio" src="index.html"></iframe>
+      </aside>
+    </div>
+  </section>
+
   <!-- ---- VÍDEOS ---- -->
-  <section class="admin-secao" id="secao-videos" data-secao="videos">
+  <section class="admin-secao" id="secao-videos" data-secao="videos" hidden>
     <button type="button" class="btn btn-primary admin-btn-full admin-btn-adicionar" id="btn-add-video">
       <span class="admin-btn-icone">+</span> Adicionar vídeo
     </button>
