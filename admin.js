@@ -1,7 +1,7 @@
 /*
   ============================================================================
   ADMIN.JS — Painel administrativo do portfólio
-  ============================================================================
+  ============================================================================  
   Login (Supabase Auth) + CRUD real de fotos/vídeos: upload de arquivo pro
   Supabase Storage, dados na tabela "midias" do Postgres. Tudo que acontece
   aqui é salvo de verdade e aparece no site público na hora.
