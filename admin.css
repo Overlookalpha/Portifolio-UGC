@@ -1,15 +1,13 @@
 /*
-  ============================================================================
-  ADMIN.CSS — Painel administrativo (mobile-first)
-  Reaproveita as variáveis de fonte/espaçamento definidas em styles.css.   
-  Não altera nenhuma regra existente do site público.
-  ============================================================================
 */
 
-/* O site público (styles.css) usa um tema claro/off-white. O painel admin
-   mantém o próprio tema escuro, redeclarando as variáveis de cor aqui —
-   assim uma reformulação visual do site público nunca muda a aparência
-   (já testada e funcionando) do painel administrativo. */
+/*
+O site público (styles.css) usa um tema claro/off-white.
+O painel admin mantém o próprio tema claro, redeclarando as variáveis
+de cor aqui — assim uma reformulação visual do site público nunca muda
+a aparência (já testada e funcionando) do painel administrativo.
+*/
+
 .admin-body {
   --bg: #f7f2eb;
   --bg-elevated: #fffdfa;
@@ -48,6 +46,7 @@
 /* ------------------------------------------------------------------ */
 /* Login                                                               */
 /* ------------------------------------------------------------------ */
+
 .admin-login {
   min-height: 100vh;
   min-height: 100dvh;
@@ -57,10 +56,13 @@
   padding: 1.5rem;
 }
 
-/* o atributo "hidden" sozinho perde pra qualquer "display" declarado aqui
-   em cima (mesma especificidade, mas essa regra de autor vem depois) —
-   por isso essas duas linhas garantem que a tela realmente some quando
-   o JS marca ela como hidden (login <-> painel depois de entrar/sair). */
+/*
+O atributo "hidden" sozinho perde pra qualquer "display" declarado aqui
+em cima (mesma especificidade, mas essa regra de autor vem depois) —
+por isso essas duas linhas garantem que a tela realmente some quando
+o JS marca ela como hidden (login <-> painel depois de entrar/sair).
+*/
+
 .admin-login[hidden],
 .admin-painel[hidden] {
   display: none;
@@ -130,26 +132,113 @@
 /* ------------------------------------------------------------------ */
 /* Painel                                                               */
 /* ------------------------------------------------------------------ */
+
 .admin-painel {
   max-width: 1280px;
   margin: 0 auto;
   padding: 1.25rem 1rem 5rem;
 }
 
-.admin-editor-intro { max-width: 42rem; margin-bottom: 1.5rem; }
-.admin-editor-intro h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: 0.55rem; }
-.admin-editor-intro p:last-child { color: var(--text-muted); font-size: 0.94rem; }
-.admin-editor-layout { display: grid; gap: 1rem; align-items: start; }
-.admin-form-pagina { display: grid; gap: 1rem; }
-.admin-form-pagina fieldset { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem; display: grid; gap: 0.85rem; background: var(--bg-elevated); }
-.admin-form-pagina legend { font-family: var(--font-display); font-size: 1.05rem; padding-inline: 0.35rem; }
-.admin-campo textarea { font-family: var(--font-body); font-size: 1rem; padding: 0.75rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg); color: var(--text); width: 100%; resize: vertical; }
-.admin-campo textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-.admin-preview-wrap { position: sticky; top: 1rem; overflow: hidden; border: 1px solid var(--border-strong); border-radius: var(--radius-lg); background: var(--bg-elevated); box-shadow: 0 12px 34px rgba(60, 42, 30, 0.09); }
-.admin-preview-top { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border-bottom: 1px solid var(--border); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
-.admin-preview-top a { text-transform: none; letter-spacing: normal; color: var(--accent-strong); font-weight: 600; }
-#preview-site { display: block; width: 100%; height: min(72vh, 720px); border: 0; background: var(--bg); }
-@media (min-width: 900px) { .admin-editor-layout { grid-template-columns: minmax(300px, 0.8fr) minmax(420px, 1.2fr); } }
+.admin-editor-intro {
+  max-width: 42rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-editor-intro h2 {
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  margin-bottom: 0.55rem;
+}
+
+.admin-editor-intro p:last-child {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+}
+
+.admin-editor-layout {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.admin-form-pagina {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-form-pagina fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+  background: var(--bg-elevated);
+}
+
+.admin-form-pagina legend {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  padding-inline: 0.35rem;
+}
+
+.admin-campo textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text);
+  width: 100%;
+  resize: vertical;
+}
+
+.admin-campo textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.admin-preview-wrap {
+  position: sticky;
+  top: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  box-shadow: 0 12px 34px rgba(60, 42, 30, 0.09);
+}
+
+.admin-preview-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.admin-preview-top a {
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+#preview-site {
+  display: block;
+  width: 100%;
+  height: min(72vh, 720px);
+  border: 0;
+  background: var(--bg);
+}
+
+@media (min-width: 900px) {
+  .admin-editor-layout {
+    grid-template-columns: minmax(300px, 0.8fr) minmax(420px, 1.2fr);
+  }
+}
 
 .admin-header {
   display: flex;
@@ -228,6 +317,7 @@
 /* ------------------------------------------------------------------ */
 /* Lista / cards                                                       */
 /* ------------------------------------------------------------------ */
+
 .admin-lista {
   display: flex;
   flex-direction: column;
@@ -332,6 +422,7 @@
 /* ------------------------------------------------------------------ */
 /* Toast                                                               */
 /* ------------------------------------------------------------------ */
+
 .admin-toast {
   position: fixed;
   left: 50%;
