@@ -816,3 +816,40 @@ section { padding-block: var(--space-6); }
 @media (min-width: 640px) {
   .install-toast { left: auto; right: 1.5rem; bottom: 1.5rem; max-width: 360px; }
 }
+/* ================================================================== */
+/* CORREÇÃO DA GALERIA: preservar proporção original das fotografias  */
+/* ================================================================== */
+
+#galeria-grid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+}
+
+/*
+   Os cards da galeria deixam de forçar todas as imagens
+   para o mesmo formato quadrado.
+*/
+#galeria-grid > * {
+  height: auto;
+}
+
+#galeria-grid > * img {
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+/* No telemóvel, a fotografia ocupa a largura disponível,
+   mas mantém a proporção original. */
+@media (max-width: 639px) {
+  #galeria-grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+  }
+}
