@@ -1,166 +1,489 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">   
-<meta name="robots" content="noindex, nofollow">
-<title>Painel Admin — Portfólio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel Admin — Portfólio</title>
 
-<meta name="theme-color" content="#0b0b0d">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Admin">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <meta name="theme-color" content="#0b0b0d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Admin">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
 
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="admin.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
 </head>
+
 <body class="admin-body">
 
-<!-- ============================ TELA DE LOGIN ============================ -->
-<div id="tela-login" class="admin-login">
-  <div class="admin-login-box">
-    <p class="eyebrow">Painel Admin</p>
-    <h1>Entrar</h1>
-    <p class="admin-login-sub">Acesso restrito — gerencie as fotos e vídeos do seu portfólio.</p>
+  <!-- ============================ TELA DE LOGIN ============================ -->
 
-    <form id="form-login" class="admin-login-form">
-      <label class="admin-campo">
-        <span>E-mail</span>
-        <input type="email" id="login-email" autocomplete="username" required inputmode="email">
-      </label>
-      <label class="admin-campo">
-        <span>Senha</span>
-        <input type="password" id="login-senha" autocomplete="current-password" required>
-      </label>
-      <button type="submit" class="btn btn-primary admin-btn-full" id="btn-entrar">Entrar</button>
-      <p class="admin-erro" id="login-erro" hidden></p>
-    </form>
-  </div>
-</div>
-
-<!-- ============================ PAINEL ADMIN ============================ -->
-<div id="tela-painel" class="admin-painel" hidden>
-
-  <header class="admin-header">
-    <div>
+  <div id="tela-login" class="admin-login">
+    <div class="admin-login-box">
       <p class="eyebrow">Painel Admin</p>
-      <h1>Meu portfólio</h1>
-    </div>
-    <button type="button" class="admin-btn-sair" id="btn-sair">Sair</button>
-  </header>
+      <h1>Entrar</h1>
+      <p class="admin-login-sub">
+        Acesso restrito — gerencie as fotos e vídeos do seu portfólio.
+      </p>
 
-  <nav class="admin-abas" role="tablist" aria-label="Área de edição">
-    <button type="button" class="admin-aba is-ativa" id="aba-pagina" data-aba="pagina" role="tab" aria-selected="true">Página</button>
-    <button type="button" class="admin-aba" id="aba-videos" data-aba="videos" role="tab" aria-selected="false">Vídeos</button>
-    <button type="button" class="admin-aba" id="aba-fotos" data-aba="fotos" role="tab" aria-selected="false">Fotos</button>
-  </nav>
+      <form id="form-login" class="admin-login-form">
+        <label class="admin-campo">
+          <span>E-mail</span>
+          <input
+            type="email"
+            id="login-email"
+            autocomplete="username"
+            required
+            inputmode="email"
+          >
+        </label>
 
-  <!-- ---- PÁGINA / EDITOR ESPELHO ---- -->
-  <section class="admin-secao admin-secao-pagina" id="secao-pagina" data-secao="pagina">
-    <div class="admin-editor-intro">
-      <p class="eyebrow">Editor visual</p>
-      <h2>Edite o que a marca vê.</h2>
-      <p>O lado direito é o seu site público. Altere os campos e salve: a prévia é atualizada com o mesmo conteúdo publicado.</p>
-    </div>
-    <div class="admin-editor-layout">
-      <form class="admin-form-pagina" id="form-pagina">
-        <fieldset>
-          <legend>Identidade</legend>
-          <label class="admin-campo"><span>Nome</span><input id="pagina-nome" type="text" maxlength="80" required></label>
-          <label class="admin-campo"><span>Título</span><input id="pagina-titulo" type="text" maxlength="80"></label>
-          <label class="admin-campo"><span>Frase de impacto</span><textarea id="pagina-frase" rows="3" maxlength="220"></textarea></label>
-          <label class="admin-campo"><span>Foto de perfil — URL</span><input id="pagina-foto" type="url" placeholder="https://..."></label>
-        </fieldset>
-        <fieldset>
-          <legend>Sobre e contacto</legend>
-          <label class="admin-campo"><span>Apresentação</span><textarea id="pagina-sobre" rows="6"></textarea></label>
-          <label class="admin-campo"><span>E-mail</span><input id="pagina-email" type="email"></label>
-          <label class="admin-campo"><span>WhatsApp (só números)</span><input id="pagina-whatsapp" inputmode="numeric"></label>
-          <label class="admin-campo"><span>Instagram — URL</span><input id="pagina-instagram" type="url" placeholder="https://instagram.com/..." ></label>
-        </fieldset>
-        <fieldset>
-          <legend>Convite final</legend>
-          <label class="admin-campo"><span>Título</span><input id="pagina-cta-titulo" type="text" maxlength="140"></label>
-          <label class="admin-campo"><span>Texto</span><textarea id="pagina-cta-texto" rows="4"></textarea></label>
-        </fieldset>
-        <button type="submit" class="btn btn-primary admin-btn-full">Salvar e atualizar prévia</button>
+        <label class="admin-campo">
+          <span>Senha</span>
+          <input
+            type="password"
+            id="login-senha"
+            autocomplete="current-password"
+            required
+          >
+        </label>
+
+        <button
+          type="submit"
+          class="btn btn-primary admin-btn-full"
+          id="btn-entrar"
+        >
+          Entrar
+        </button>
+
+        <p class="admin-erro" id="login-erro" hidden></p>
       </form>
-      <aside class="admin-preview-wrap" aria-label="Prévia do site público">
-        <div class="admin-preview-top"><span>Prévia pública</span><a href="index.html" target="_blank" rel="noopener">Abrir site ↗</a></div>
-        <iframe id="preview-site" title="Prévia do portfólio" src="index.html"></iframe>
-      </aside>
     </div>
-  </section>
+  </div>
 
-  <!-- ---- VÍDEOS ---- -->
-  <section class="admin-secao" id="secao-videos" data-secao="videos" hidden>
-    <button type="button" class="btn btn-primary admin-btn-full admin-btn-adicionar" id="btn-add-video">
-      <span class="admin-btn-icone">+</span> Adicionar vídeo
-    </button>
-    <input type="file" id="input-video" accept="video/*" hidden>
 
-    <div class="admin-upload-status" id="status-upload-video" hidden></div>
+  <!-- ============================ PAINEL ADMIN ============================ -->
 
-    <div class="admin-lista" id="lista-videos"></div>
-    <p class="admin-vazio" id="vazio-videos" hidden>Nenhum vídeo cadastrado ainda. Toque em "Adicionar vídeo" pra começar.</p>
-  </section>
+  <div id="tela-painel" class="admin-painel" hidden>
 
-  <!-- ---- FOTOS ---- -->
-  <section class="admin-secao" id="secao-fotos" data-secao="fotos" hidden>
-    <button type="button" class="btn btn-primary admin-btn-full admin-btn-adicionar" id="btn-add-foto">
-      <span class="admin-btn-icone">+</span> Adicionar foto
-    </button>
-    <input type="file" id="input-foto" accept="image/*" hidden>
-
-    <div class="admin-upload-status" id="status-upload-foto" hidden></div>
-
-    <div class="admin-lista" id="lista-fotos"></div>
-    <p class="admin-vazio" id="vazio-fotos" hidden>Nenhuma foto cadastrada ainda. Toque em "Adicionar foto" pra começar.</p>
-  </section>
-
-</div>
-
-<!-- Modelo de card de mídia (usado via JS) -->
-<template id="template-card-midia">
-  <article class="admin-card">
-    <div class="admin-card-media">
-      <img class="admin-card-thumb" alt="">
-      <span class="admin-card-play" hidden>▶</span>
-    </div>
-    <div class="admin-card-corpo">
-      <label class="admin-campo admin-campo-compacto">
-        <span>Título / legenda</span>
-        <input type="text" class="admin-input-titulo" maxlength="120">
-      </label>
-      <label class="admin-campo admin-campo-compacto">
-        <span>Categoria</span>
-        <select class="admin-select-categoria"></select>
-      </label>
-      <label class="admin-card-destaque">
-        <input type="checkbox" class="admin-checkbox-destaque">
-        <span>Destaque</span>
-      </label>
-      <div class="admin-card-acoes">
-        <button type="button" class="admin-icon-btn admin-btn-subir" aria-label="Mover para cima">↑</button>
-        <button type="button" class="admin-icon-btn admin-btn-descer" aria-label="Mover para baixo">↓</button>
-        <button type="button" class="admin-icon-btn admin-btn-substituir" aria-label="Substituir arquivo">Substituir</button>
-        <button type="button" class="admin-icon-btn admin-btn-excluir admin-btn-perigo" aria-label="Excluir">Excluir</button>
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">Painel Admin</p>
+        <h1>Meu portfólio</h1>
       </div>
-    </div>
-  </article>
-</template>
 
-<div class="admin-toast" id="admin-toast" hidden></div>
+      <button type="button" class="admin-btn-sair" id="btn-sair">
+        Sair
+      </button>
+    </header>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="config.js"></script>
-<script src="admin.js"></script>
+
+    <nav
+      class="admin-abas"
+      role="tablist"
+      aria-label="Área de edição"
+    >
+      <button
+        type="button"
+        class="admin-aba is-ativa"
+        id="aba-pagina"
+        data-aba="pagina"
+        role="tab"
+        aria-selected="true"
+      >
+        Página
+      </button>
+
+      <button
+        type="button"
+        class="admin-aba"
+        id="aba-videos"
+        data-aba="videos"
+        role="tab"
+        aria-selected="false"
+      >
+        Vídeos
+      </button>
+
+      <button
+        type="button"
+        class="admin-aba"
+        id="aba-fotos"
+        data-aba="fotos"
+        role="tab"
+        aria-selected="false"
+      >
+        Fotos
+      </button>
+    </nav>
+
+
+    <!-- ---- PÁGINA / EDITOR ESPELHO ---- -->
+
+    <section
+      class="admin-secao admin-secao-pagina"
+      id="secao-pagina"
+      data-secao="pagina"
+    >
+      <div class="admin-editor-intro">
+        <p class="eyebrow">Editor visual</p>
+
+        <h2>Edite o que a marca vê.</h2>
+
+        <p>
+          O lado direito é o seu site público. Altere os campos e salve:
+          a prévia é atualizada com o mesmo conteúdo publicado.
+        </p>
+      </div>
+
+
+      <div class="admin-editor-layout">
+
+        <form class="admin-form-pagina" id="form-pagina">
+
+          <fieldset>
+            <legend>Identidade</legend>
+
+            <label class="admin-campo">
+              <span>Nome</span>
+              <input
+                id="pagina-nome"
+                type="text"
+                maxlength="80"
+                required
+              >
+            </label>
+
+            <label class="admin-campo">
+              <span>Título</span>
+              <input
+                id="pagina-titulo"
+                type="text"
+                maxlength="80"
+              >
+            </label>
+
+            <label class="admin-campo">
+              <span>Frase de impacto</span>
+              <textarea
+                id="pagina-frase"
+                rows="3"
+                maxlength="220"
+              ></textarea>
+            </label>
+
+            <label class="admin-campo">
+              <span>Foto de perfil — URL</span>
+              <input
+                id="pagina-foto"
+                type="url"
+                placeholder="https://..."
+              >
+            </label>
+          </fieldset>
+
+
+          <fieldset>
+            <legend>Sobre e contacto</legend>
+
+            <label class="admin-campo">
+              <span>Apresentação</span>
+              <textarea
+                id="pagina-sobre"
+                rows="6"
+              ></textarea>
+            </label>
+
+            <label class="admin-campo">
+              <span>E-mail</span>
+              <input
+                id="pagina-email"
+                type="email"
+              >
+            </label>
+
+            <label class="admin-campo">
+              <span>WhatsApp (só números)</span>
+              <input
+                id="pagina-whatsapp"
+                inputmode="numeric"
+              >
+            </label>
+
+            <label class="admin-campo">
+              <span>Instagram — URL</span>
+              <input
+                id="pagina-instagram"
+                type="url"
+                placeholder="https://instagram.com/..."
+              >
+            </label>
+          </fieldset>
+
+
+          <fieldset>
+            <legend>Convite final</legend>
+
+            <label class="admin-campo">
+              <span>Título</span>
+              <input
+                id="pagina-cta-titulo"
+                type="text"
+                maxlength="140"
+              >
+            </label>
+
+            <label class="admin-campo">
+              <span>Texto</span>
+              <textarea
+                id="pagina-cta-texto"
+                rows="4"
+              ></textarea>
+            </label>
+          </fieldset>
+
+
+          <button
+            type="submit"
+            class="btn btn-primary admin-btn-full"
+          >
+            Salvar e atualizar prévia
+          </button>
+
+        </form>
+
+
+        <aside
+          class="admin-preview-wrap"
+          aria-label="Prévia do site público"
+        >
+          <div class="admin-preview-top">
+            <span>Prévia pública</span>
+
+            <a
+              href="index.html"
+              target="_blank"
+              rel="noopener"
+            >
+              Abrir site ↗
+            </a>
+          </div>
+
+          <iframe
+            id="preview-site"
+            title="Prévia do portfólio"
+            src="index.html"
+          ></iframe>
+        </aside>
+
+      </div>
+    </section>
+
+
+    <!-- ---- VÍDEOS ---- -->
+
+    <section
+      class="admin-secao"
+      id="secao-videos"
+      data-secao="videos"
+      hidden
+    >
+      <button
+        type="button"
+        class="btn btn-primary admin-btn-full admin-btn-adicionar"
+        id="btn-add-video"
+      >
+        <span class="admin-btn-icone">+</span>
+        Adicionar vídeo
+      </button>
+
+      <input
+        type="file"
+        id="input-video"
+        accept="video/*"
+        hidden
+      >
+
+      <div
+        class="admin-upload-status"
+        id="status-upload-video"
+        hidden
+      ></div>
+
+      <div
+        class="admin-lista"
+        id="lista-videos"
+      ></div>
+
+      <p
+        class="admin-vazio"
+        id="vazio-videos"
+        hidden
+      >
+        Nenhum vídeo cadastrado ainda.
+        Toque em "Adicionar vídeo" pra começar.
+      </p>
+    </section>
+
+
+    <!-- ---- FOTOS ---- -->
+
+    <section
+      class="admin-secao"
+      id="secao-fotos"
+      data-secao="fotos"
+      hidden
+    >
+      <button
+        type="button"
+        class="btn btn-primary admin-btn-full admin-btn-adicionar"
+        id="btn-add-foto"
+      >
+        <span class="admin-btn-icone">+</span>
+        Adicionar foto
+      </button>
+
+      <input
+        type="file"
+        id="input-foto"
+        accept="image/*"
+        hidden
+      >
+
+      <div
+        class="admin-upload-status"
+        id="status-upload-foto"
+        hidden
+      ></div>
+
+      <div
+        class="admin-lista"
+        id="lista-fotos"
+      ></div>
+
+      <p
+        class="admin-vazio"
+        id="vazio-fotos"
+        hidden
+      >
+        Nenhuma foto cadastrada ainda.
+        Toque em "Adicionar foto" pra começar.
+      </p>
+    </section>
+
+  </div>
+
+
+  <!-- Modelo de card de mídia (usado via JS) -->
+
+  <template id="template-card-midia">
+    <article class="admin-card">
+
+      <div class="admin-card-media">
+        <img
+          class="admin-card-thumb"
+          alt=""
+        >
+
+        <span
+          class="admin-card-play"
+          hidden
+        >
+          ▶
+        </span>
+      </div>
+
+
+      <div class="admin-card-corpo">
+
+        <label class="admin-campo admin-campo-compacto">
+          <span>Título / legenda</span>
+
+          <input
+            type="text"
+            class="admin-input-titulo"
+            maxlength="120"
+          >
+        </label>
+
+
+        <label class="admin-campo admin-campo-compacto">
+          <span>Categoria</span>
+
+          <select class="admin-select-categoria"></select>
+        </label>
+
+
+        <label class="admin-card-destaque">
+          <input
+            type="checkbox"
+            class="admin-checkbox-destaque"
+          >
+
+          <span>Destaque</span>
+        </label>
+
+
+        <div class="admin-card-acoes">
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-subir"
+            aria-label="Mover para cima"
+          >
+            ↑
+          </button>
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-descer"
+            aria-label="Mover para baixo"
+          >
+            ↓
+          </button>
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-substituir"
+            aria-label="Substituir arquivo"
+          >
+            Substituir
+          </button>
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-excluir admin-btn-perigo"
+            aria-label="Excluir"
+          >
+            Excluir
+          </button>
+
+        </div>
+
+      </div>
+    </article>
+  </template>
+
+
+  <div
+    class="admin-toast"
+    id="admin-toast"
+    hidden
+  ></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+
 </body>
 </html>
