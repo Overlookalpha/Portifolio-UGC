@@ -488,7 +488,7 @@ section { padding-block: var(--space-6); }
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scroll-behavior: smooth;
-    scroll-snap-type: inline mandatory;
+    scroll-snap-type: none;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -496,8 +496,6 @@ section { padding-block: var(--space-6); }
   .video-grid::-webkit-scrollbar { display: none; }
 
   .video-card {
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
   }
 }
 @media (min-width: 640px) { .video-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
@@ -650,7 +648,7 @@ section { padding-block: var(--space-6); }
     background: transparent;
     overscroll-behavior-inline: contain;
     scroll-behavior: smooth;
-    scroll-snap-type: inline mandatory;
+    scroll-snap-type: none;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -662,8 +660,6 @@ section { padding-block: var(--space-6); }
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
     box-shadow: 0 12px 30px rgba(39, 28, 21, 0.06);
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
   }
 }
 @media (min-width: 640px) { .servicos-grid { grid-template-columns: repeat(2, 1fr); } }

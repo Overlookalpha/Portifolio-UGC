@@ -1497,6 +1497,7 @@
   var videosPausaAte = 0;
   var videosVisivel = false;
   var videosMovimentoAutomatico = false;
+  var videosDirecao = 1;
 
   function setupCarrosselVideos() {
     var grid = $("#video-grid");
@@ -1506,12 +1507,22 @@
     if (grid.dataset.autoCarouselBound !== "true") {
       grid.dataset.autoCarouselBound = "true";
 
-      ["touchstart", "pointerdown", "scroll"].forEach(function (evento) {
+      ["touchstart", "pointerdown"].forEach(function (evento) {
         grid.addEventListener(
           evento,
           function () {
-            if (evento === "scroll" && videosMovimentoAutomatico) return;
-            videosPausaAte = Date.now() + 7000;
+            videosMovimentoAutomatico = false;
+            videosPausaAte = Infinity;
+          },
+          { passive: true }
+        );
+      });
+
+      ["touchend", "touchcancel", "pointerup", "pointercancel"].forEach(function (evento) {
+        grid.addEventListener(
+          evento,
+          function () {
+            videosPausaAte = Date.now() + 1000;
           },
           { passive: true }
         );
@@ -1573,29 +1584,16 @@
 
       if (cards.length < 2) return;
 
-      var atual = 0;
-      var menorDistancia = Infinity;
-
-      cards.forEach(function (card, indice) {
-        var distancia = Math.abs(card.offsetLeft - grid.scrollLeft);
-        if (distancia < menorDistancia) {
-          menorDistancia = distancia;
-          atual = indice;
-        }
-      });
-
-      var proximo = cards[(atual + 1) % cards.length];
       videosMovimentoAutomatico = true;
 
-      grid.scrollTo({
-        left: proximo.offsetLeft - grid.offsetLeft - 20,
-        behavior: "smooth"
-      });
+      if (grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 2) {
+        videosDirecao = -1;
+      } else if (grid.scrollLeft <= 1) {
+        videosDirecao = 1;
+      }
 
-      window.setTimeout(function () {
-        videosMovimentoAutomatico = false;
-      }, 900);
-    }, 3600);
+      grid.scrollLeft += 0.7 * videosDirecao;
+    }, 24);
   }
 
   // --------------------------------------------------------------------------
@@ -1757,6 +1755,7 @@
   var servicosPausaAte = 0;
   var servicosVisivel = false;
   var servicosMovimentoAutomatico = false;
+  var servicosDirecao = 1;
 
   function setupCarrosselServicos() {
     var grid = $("#servicos-grid");
@@ -1766,18 +1765,22 @@
     if (grid.dataset.carouselBound !== "true") {
       grid.dataset.carouselBound = "true";
 
-      ["touchstart", "pointerdown", "scroll"].forEach(function (evento) {
+      ["touchstart", "pointerdown"].forEach(function (evento) {
         grid.addEventListener(
           evento,
           function () {
-            if (
-              evento === "scroll" &&
-              servicosMovimentoAutomatico
-            ) {
-              return;
-            }
+            servicosMovimentoAutomatico = false;
+            servicosPausaAte = Infinity;
+          },
+          { passive: true }
+        );
+      });
 
-            servicosPausaAte = Date.now() + 7000;
+      ["touchend", "touchcancel", "pointerup", "pointercancel"].forEach(function (evento) {
+        grid.addEventListener(
+          evento,
+          function () {
+            servicosPausaAte = Date.now() + 1000;
           },
           { passive: true }
         );
@@ -1828,34 +1831,18 @@
     servicosTimer = window.setInterval(function () {
       if (Date.now() < servicosPausaAte) return;
 
-      var cards = Array.prototype.slice.call(grid.children);
-      if (cards.length < 2) return;
-
-      var atual = 0;
-      var menorDistancia = Infinity;
-
-      cards.forEach(function (card, indice) {
-        var distancia = Math.abs(card.offsetLeft - grid.scrollLeft);
-
-        if (distancia < menorDistancia) {
-          menorDistancia = distancia;
-          atual = indice;
-        }
-      });
-
-      var proximo = cards[(atual + 1) % cards.length];
+      if (grid.children.length < 2) return;
 
       servicosMovimentoAutomatico = true;
 
-      grid.scrollTo({
-        left: proximo.offsetLeft - grid.offsetLeft - 20,
-        behavior: "smooth"
-      });
+      if (grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 2) {
+        servicosDirecao = -1;
+      } else if (grid.scrollLeft <= 1) {
+        servicosDirecao = 1;
+      }
 
-      window.setTimeout(function () {
-        servicosMovimentoAutomatico = false;
-      }, 900);
-    }, 3200);
+      grid.scrollLeft += 0.7 * servicosDirecao;
+    }, 24);
   }
 
   // --------------------------------------------------------------------------
