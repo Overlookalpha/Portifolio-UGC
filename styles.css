@@ -486,12 +486,14 @@ section { padding-block: var(--space-6); }
   aspect-ratio: 9 / 16;
   border-radius: var(--radius-md);
   overflow: hidden;
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   background: var(--bg-elevated-2);
   border: 1px solid var(--border);
   cursor: pointer;
   transition: transform var(--dur-base) var(--ease);
 }
-.video-card:hover { transform: translateY(-3px); }
 .video-card img,
 .video-card video {
   width: 100%;
@@ -502,8 +504,11 @@ section { padding-block: var(--space-6); }
 .video-card video {
   background: var(--bg-elevated-2);
 }
-.video-card:hover img,
-.video-card:hover video { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .video-card:hover { transform: translateY(-3px); }
+  .video-card:hover img,
+  .video-card:hover video { transform: scale(1.04); }
+}
 
 .video-card-overlay {
   position: absolute;
@@ -561,18 +566,24 @@ section { padding-block: var(--space-6); }
   margin-bottom: 1.1rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   cursor: pointer;
   position: relative;
-  border: 1px solid var(--border);
+  border: 0;
+  background: transparent;
 }
 .galeria-item img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: calc(var(--radius-lg) - 1px);
+  border-radius: inherit;
   transition: transform var(--dur-slow) var(--ease);
 }
-.galeria-item:hover img { transform: scale(1.03); }
+@media (hover: hover) and (pointer: fine) {
+  .galeria-item:hover img { transform: scale(1.03); }
+}
 .galeria-item-legenda {
   position: absolute;
   inset: 0;

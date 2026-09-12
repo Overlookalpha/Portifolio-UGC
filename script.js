@@ -2558,7 +2558,12 @@
       "load",
       function () {
         navigator.serviceWorker
-          .register("sw.js")
+          .register("sw.js", {
+            updateViaCache: "none"
+          })
+          .then(function (registro) {
+            return registro.update();
+          })
           .catch(
             function () {
               // Continua normalmente.

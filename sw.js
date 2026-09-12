@@ -14,7 +14,7 @@
   ============================================================================
 */
 
-var CACHE_VERSAO = "v5";
+var CACHE_VERSAO = "v6";
 var CACHE_ESSENCIAL = "ugc-portfolio-essencial-" + CACHE_VERSAO;
 var CACHE_RUNTIME = "ugc-portfolio-runtime-" + CACHE_VERSAO;
 
@@ -80,6 +80,27 @@ self.addEventListener("fetch", function (evento) {
       fetch(requisicao).catch(function () {
         return caches.match("index.html");
       })
+    );
+    return;
+  }
+
+  // Código e estilos: rede primeiro para correções chegarem já no primeiro
+  // acesso. Se estiver offline, usa a última versão salva.
+  if (/\.(?:css|js)$/.test(url.pathname)) {
+    evento.respondWith(
+      fetch(requisicao)
+        .then(function (respostaRede) {
+          if (respostaRede && respostaRede.status === 200) {
+            var copia = respostaRede.clone();
+            caches.open(CACHE_ESSENCIAL).then(function (cache) {
+              cache.put(requisicao, copia);
+            });
+          }
+          return respostaRede;
+        })
+        .catch(function () {
+          return caches.match(requisicao);
+        })
     );
     return;
   }
