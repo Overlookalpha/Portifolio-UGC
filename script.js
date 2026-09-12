@@ -50,6 +50,8 @@
     setupReveal();
     setupFiltrosVideo();
     setupVideoPreviews();
+    setupCarrosselVideos();
+    setupCarrosselServicos();
     setupModal();
     setupInstallPrompt();
     registrarServiceWorker();
@@ -262,6 +264,8 @@
 
         setupFiltrosVideo();
         setupVideoPreviews();
+        setupCarrosselVideos();
+        setupCarrosselServicos();
         setupModal();
         setupReveal();
       })
@@ -463,6 +467,7 @@
 
         setupFiltrosVideo();
         setupVideoPreviews();
+        setupCarrosselVideos();
         setupModal();
       })
       .catch(function () {
@@ -1416,6 +1421,7 @@
           );
 
         setupVideoPreviews();
+        setupCarrosselVideos();
       }
     );
   }
@@ -1481,6 +1487,115 @@
         // Alguns navegadores bloqueiam autoplay; o poster continua visível.
       });
     }
+  }
+
+  // --------------------------------------------------------------------------
+  // CARROSSEL AUTOMÁTICO DE VÍDEOS NO CELULAR
+  // --------------------------------------------------------------------------
+
+  var videosTimer = null;
+  var videosPausaAte = 0;
+  var videosVisivel = false;
+  var videosMovimentoAutomatico = false;
+
+  function setupCarrosselVideos() {
+    var grid = $("#video-grid");
+
+    if (!grid) return;
+
+    if (grid.dataset.autoCarouselBound !== "true") {
+      grid.dataset.autoCarouselBound = "true";
+
+      ["touchstart", "pointerdown", "scroll"].forEach(function (evento) {
+        grid.addEventListener(
+          evento,
+          function () {
+            if (evento === "scroll" && videosMovimentoAutomatico) return;
+            videosPausaAte = Date.now() + 7000;
+          },
+          { passive: true }
+        );
+      });
+
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(
+          function (entradas) {
+            videosVisivel = !!(
+              entradas[0] && entradas[0].isIntersecting
+            );
+            atualizarTimerVideos();
+          },
+          { threshold: 0.25 }
+        ).observe(grid);
+      } else {
+        videosVisivel = true;
+      }
+
+      window.addEventListener("resize", atualizarTimerVideos);
+      document.addEventListener("visibilitychange", atualizarTimerVideos);
+    }
+
+    atualizarTimerVideos();
+  }
+
+  function atualizarTimerVideos() {
+    var grid = $("#video-grid");
+    var celular = window.matchMedia("(max-width: 639px)").matches;
+    var reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cards = grid
+      ? Array.prototype.slice.call(
+          grid.querySelectorAll(".video-card:not(.is-hidden)")
+        )
+      : [];
+
+    var podeRodar =
+      grid &&
+      cards.length > 1 &&
+      celular &&
+      !reduzirMovimento &&
+      videosVisivel &&
+      !document.hidden;
+
+    if (!podeRodar) {
+      if (videosTimer) window.clearInterval(videosTimer);
+      videosTimer = null;
+      return;
+    }
+
+    if (videosTimer) return;
+
+    videosTimer = window.setInterval(function () {
+      if (Date.now() < videosPausaAte) return;
+
+      cards = Array.prototype.slice.call(
+        grid.querySelectorAll(".video-card:not(.is-hidden)")
+      );
+
+      if (cards.length < 2) return;
+
+      var atual = 0;
+      var menorDistancia = Infinity;
+
+      cards.forEach(function (card, indice) {
+        var distancia = Math.abs(card.offsetLeft - grid.scrollLeft);
+        if (distancia < menorDistancia) {
+          menorDistancia = distancia;
+          atual = indice;
+        }
+      });
+
+      var proximo = cards[(atual + 1) % cards.length];
+      videosMovimentoAutomatico = true;
+
+      grid.scrollTo({
+        left: proximo.offsetLeft - grid.offsetLeft - 20,
+        behavior: "smooth"
+      });
+
+      window.setTimeout(function () {
+        videosMovimentoAutomatico = false;
+      }, 900);
+    }, 3600);
   }
 
   // --------------------------------------------------------------------------
@@ -1630,6 +1745,117 @@
         }
       )
     );
+
+    setupCarrosselServicos();
+  }
+
+  // --------------------------------------------------------------------------
+  // CARROSSEL AUTOMÁTICO DE SERVIÇOS NO CELULAR
+  // --------------------------------------------------------------------------
+
+  var servicosTimer = null;
+  var servicosPausaAte = 0;
+  var servicosVisivel = false;
+  var servicosMovimentoAutomatico = false;
+
+  function setupCarrosselServicos() {
+    var grid = $("#servicos-grid");
+
+    if (!grid) return;
+
+    if (grid.dataset.carouselBound !== "true") {
+      grid.dataset.carouselBound = "true";
+
+      ["touchstart", "pointerdown", "scroll"].forEach(function (evento) {
+        grid.addEventListener(
+          evento,
+          function () {
+            if (
+              evento === "scroll" &&
+              servicosMovimentoAutomatico
+            ) {
+              return;
+            }
+
+            servicosPausaAte = Date.now() + 7000;
+          },
+          { passive: true }
+        );
+      });
+
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(
+          function (entradas) {
+            servicosVisivel = !!(
+              entradas[0] && entradas[0].isIntersecting
+            );
+
+            atualizarTimerServicos();
+          },
+          { threshold: 0.25 }
+        ).observe(grid);
+      } else {
+        servicosVisivel = true;
+      }
+
+      window.addEventListener("resize", atualizarTimerServicos);
+      document.addEventListener("visibilitychange", atualizarTimerServicos);
+    }
+
+    atualizarTimerServicos();
+  }
+
+  function atualizarTimerServicos() {
+    var grid = $("#servicos-grid");
+    var celular = window.matchMedia("(max-width: 639px)").matches;
+    var reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var podeRodar =
+      grid &&
+      grid.children.length > 1 &&
+      celular &&
+      !reduzirMovimento &&
+      servicosVisivel &&
+      !document.hidden;
+
+    if (!podeRodar) {
+      if (servicosTimer) window.clearInterval(servicosTimer);
+      servicosTimer = null;
+      return;
+    }
+
+    if (servicosTimer) return;
+
+    servicosTimer = window.setInterval(function () {
+      if (Date.now() < servicosPausaAte) return;
+
+      var cards = Array.prototype.slice.call(grid.children);
+      if (cards.length < 2) return;
+
+      var atual = 0;
+      var menorDistancia = Infinity;
+
+      cards.forEach(function (card, indice) {
+        var distancia = Math.abs(card.offsetLeft - grid.scrollLeft);
+
+        if (distancia < menorDistancia) {
+          menorDistancia = distancia;
+          atual = indice;
+        }
+      });
+
+      var proximo = cards[(atual + 1) % cards.length];
+
+      servicosMovimentoAutomatico = true;
+
+      grid.scrollTo({
+        left: proximo.offsetLeft - grid.offsetLeft - 20,
+        behavior: "smooth"
+      });
+
+      window.setTimeout(function () {
+        servicosMovimentoAutomatico = false;
+      }, 900);
+    }, 3200);
   }
 
   // --------------------------------------------------------------------------
