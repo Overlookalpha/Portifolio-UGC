@@ -46,6 +46,7 @@
     wireAbas();
     wireAdicionar();
     wireEditorPagina();
+    wireAparencia();
 
     sb.auth.getSession().then(function (resposta) {
       var sessao =
@@ -1084,6 +1085,137 @@
               "Salvar alterações";
           }
         });
+    });
+  }
+
+  /* ========================================================================
+     PALETAS DE APARÊNCIA
+  ======================================================================== */
+
+  function wireAparencia() {
+    var temas = {
+      bege: {
+        fundo: "#f8f1e7",
+        fundoElevado: "#eee1d1",
+        texto: "#2f211c",
+        textoSecundario: "#78685f",
+        destaque: "#bd8b64",
+        textoDestaque: "#ffffff",
+        raio: 28
+      },
+      rose: {
+        fundo: "#fff5f5",
+        fundoElevado: "#f5e3e5",
+        texto: "#3a2529",
+        textoSecundario: "#80666b",
+        destaque: "#c9828d",
+        textoDestaque: "#ffffff",
+        raio: 26
+      },
+      oliva: {
+        fundo: "#f3f1e8",
+        fundoElevado: "#e5e4d5",
+        texto: "#273126",
+        textoSecundario: "#687065",
+        destaque: "#87906b",
+        textoDestaque: "#ffffff",
+        raio: 22
+      },
+      minimal: {
+        fundo: "#f7f5f0",
+        fundoElevado: "#ffffff",
+        texto: "#1c1b18",
+        textoSecundario: "#625f58",
+        destaque: "#1c1b18",
+        textoDestaque: "#ffffff",
+        raio: 18
+      }
+    };
+
+    var camposTema = {
+      fundo: "pagina-cor-fundo",
+      fundoElevado: "pagina-cor-fundo-elevado",
+      texto: "pagina-cor-texto",
+      textoSecundario: "pagina-cor-texto-secundario",
+      destaque: "pagina-cor-destaque",
+      textoDestaque: "pagina-cor-texto-destaque",
+      raio: "pagina-raio"
+    };
+
+    var temasEl = $("#admin-temas");
+
+    if (temasEl) {
+      temasEl.addEventListener("click", function (evento) {
+        var botao = evento.target.closest("[data-tema]");
+
+        if (!botao || !temas[botao.dataset.tema]) return;
+
+        var tema = temas[botao.dataset.tema];
+
+        Object.keys(camposTema).forEach(function (chave) {
+          definirValor(camposTema[chave], tema[chave]);
+        });
+
+        marcarEscolha(temasEl, botao);
+        atualizarEscolhaCor();
+        atualizarEscolhaRaio();
+        mostrarToast("Tema aplicado. Toque em Salvar alterações.");
+      });
+    }
+
+    var coresEl = $("#admin-cores-letra");
+
+    if (coresEl) {
+      coresEl.addEventListener("click", function (evento) {
+        var botao = evento.target.closest("[data-cor]");
+
+        if (!botao) return;
+
+        definirValor("pagina-cor-texto", botao.dataset.cor);
+        marcarEscolha(coresEl, botao);
+      });
+    }
+
+    var raiosEl = $("#admin-raios");
+
+    if (raiosEl) {
+      raiosEl.addEventListener("click", function (evento) {
+        var botao = evento.target.closest("[data-raio]");
+
+        if (!botao) return;
+
+        definirValor("pagina-raio", botao.dataset.raio);
+        marcarEscolha(raiosEl, botao);
+      });
+    }
+
+    var campoCor = $("#pagina-cor-texto");
+    var campoRaio = $("#pagina-raio");
+
+    if (campoCor) campoCor.addEventListener("input", atualizarEscolhaCor);
+    if (campoRaio) campoRaio.addEventListener("input", atualizarEscolhaRaio);
+
+    function atualizarEscolhaCor() {
+      var atual = valor("pagina-cor-texto").toLowerCase();
+      $all("[data-cor]", coresEl).forEach(function (botao) {
+        botao.classList.toggle("is-selected", botao.dataset.cor === atual);
+      });
+    }
+
+    function atualizarEscolhaRaio() {
+      var atual = valor("pagina-raio");
+      $all("[data-raio]", raiosEl).forEach(function (botao) {
+        botao.classList.toggle("is-selected", botao.dataset.raio === atual);
+      });
+    }
+
+    atualizarEscolhaCor();
+    atualizarEscolhaRaio();
+  }
+
+  function marcarEscolha(container, escolhido) {
+    $all("button", container).forEach(function (botao) {
+      botao.classList.toggle("is-selected", botao === escolhido);
     });
   }
 

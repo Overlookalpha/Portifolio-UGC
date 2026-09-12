@@ -222,6 +222,118 @@ Este ficheiro trata apenas da apresentação.
   cursor: pointer;
 }
 
+/* Paletas visuais de aparência */
+
+.admin-paleta-secao {
+  margin-bottom: 1.25rem;
+}
+
+.admin-paleta-titulo {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.admin-paleta-ajuda {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.admin-temas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.admin-tema {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  text-align: left;
+}
+
+.admin-tema.is-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(157, 114, 93, 0.16);
+}
+
+.admin-tema-cores {
+  display: flex;
+  margin-bottom: 0.45rem;
+}
+
+.admin-tema-cores i {
+  width: 24px;
+  height: 24px;
+  margin-right: -4px;
+  border: 2px solid var(--bg-elevated);
+  border-radius: 50%;
+  background: var(--cor);
+}
+
+.admin-tema strong {
+  display: block;
+  overflow: hidden;
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-cores-letra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.admin-cores-letra button {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--bg-elevated);
+  border-radius: 50%;
+  background: var(--cor);
+  box-shadow: 0 0 0 1px var(--border-strong);
+}
+
+.admin-cores-letra button.is-selected {
+  box-shadow: 0 0 0 3px var(--accent);
+}
+
+.admin-raios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.55rem;
+  margin-top: 0.65rem;
+}
+
+.admin-raios button {
+  min-height: 42px;
+  padding: 0.45rem;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  font-size: 0.72rem;
+}
+
+.admin-raios button:nth-child(1) { border-radius: 7px; }
+.admin-raios button:nth-child(2) { border-radius: 14px; }
+.admin-raios button:nth-child(3) { border-radius: 21px; }
+
+.admin-raios button.is-selected {
+  border-color: var(--accent);
+  background: var(--bg-elevated-2);
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .admin-temas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
 /* Range */
 
 .admin-campo input[type="range"] {
