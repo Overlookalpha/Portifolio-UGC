@@ -20,6 +20,7 @@
   "use strict";
 
   var cfg = window.SITE_CONFIG || {};
+  var clienteSupabase = null;
 
   document.addEventListener("DOMContentLoaded", init);
 
@@ -48,6 +49,7 @@
     setupScrollHeader();
     setupReveal();
     setupFiltrosVideo();
+    setupVideoPreviews();
     setupModal();
     setupInstallPrompt();
     registrarServiceWorker();
@@ -194,6 +196,10 @@
   // --------------------------------------------------------------------------
 
   function criarClienteSupabase() {
+    if (clienteSupabase) {
+      return clienteSupabase;
+    }
+
     if (
       !cfg.supabase ||
       !cfg.supabase.url ||
@@ -203,10 +209,12 @@
       return null;
     }
 
-    return window.supabase.createClient(
+    clienteSupabase = window.supabase.createClient(
       cfg.supabase.url,
       cfg.supabase.anonKey
     );
+
+    return clienteSupabase;
   }
 
   // --------------------------------------------------------------------------
@@ -253,6 +261,7 @@
         renderCTA();
 
         setupFiltrosVideo();
+        setupVideoPreviews();
         setupModal();
         setupReveal();
       })
@@ -453,6 +462,7 @@
         renderGaleria();
 
         setupFiltrosVideo();
+        setupVideoPreviews();
         setupModal();
       })
       .catch(function () {
@@ -1181,24 +1191,63 @@
                 "")
           );
 
-          var img = el(
-            "img"
-          );
+          if (video.video) {
+            var preview = document.createElement(
+              "video"
+            );
 
-          img.src =
-            video.thumbnail ||
-            "";
+            preview.src =
+              video.video;
 
-          img.alt =
-            video.titulo ||
-            "";
+            preview.poster =
+              video.thumbnail ||
+              "";
 
-          img.loading =
-            "lazy";
+            preview.preload =
+              "metadata";
 
-          card.appendChild(
-            img
-          );
+            preview.muted = true;
+            preview.defaultMuted = true;
+            preview.loop = true;
+            preview.playsInline = true;
+            preview.setAttribute(
+              "muted",
+              ""
+            );
+
+            preview.setAttribute(
+              "playsinline",
+              ""
+            );
+
+            preview.setAttribute(
+              "aria-hidden",
+              "true"
+            );
+
+            card.appendChild(
+              preview
+            );
+          } else {
+            var img = el(
+              "img"
+            );
+
+            img.src =
+              video.thumbnail ||
+              "";
+
+            img.alt =
+              video.titulo ||
+              "";
+
+            img.loading =
+              "lazy";
+
+            card.appendChild(
+              img
+            );
+          }
 
           var playIcon =
             el(
@@ -1351,10 +1400,87 @@
                 "is-hidden",
                 !mostrar
               );
+
+              var preview =
+                card.querySelector(
+                  "video"
+                );
+
+              if (
+                preview &&
+                !mostrar
+              ) {
+                preview.pause();
+              }
             }
           );
+
+        setupVideoPreviews();
       }
     );
+  }
+
+  // --------------------------------------------------------------------------
+  // PRÉVIAS AUTOMÁTICAS DOS VÍDEOS
+  // --------------------------------------------------------------------------
+
+  var videoPreviewObserver = null;
+
+  function setupVideoPreviews() {
+    var previews =
+      document.querySelectorAll(
+        ".video-card:not(.is-hidden) video"
+      );
+
+    if (videoPreviewObserver) {
+      videoPreviewObserver.disconnect();
+    }
+
+    if (!previews.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      previews.forEach(ativarPreviewVideo);
+      return;
+    }
+
+    videoPreviewObserver =
+      new IntersectionObserver(
+        function (entradas) {
+          entradas.forEach(
+            function (entrada) {
+              var preview =
+                entrada.target;
+
+              if (entrada.isIntersecting) {
+                ativarPreviewVideo(preview);
+              } else {
+                preview.pause();
+              }
+            }
+          );
+        },
+        {
+          threshold: 0.08,
+          rootMargin: "0px"
+        }
+      );
+
+    previews.forEach(function (preview) {
+      videoPreviewObserver.observe(preview);
+    });
+  }
+
+  function ativarPreviewVideo(preview) {
+    var tentativa = preview.play();
+
+    if (
+      tentativa &&
+      typeof tentativa.catch === "function"
+    ) {
+      tentativa.catch(function () {
+        // Alguns navegadores bloqueiam autoplay; o poster continua visível.
+      });
+    }
   }
 
   // --------------------------------------------------------------------------

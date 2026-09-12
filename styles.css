@@ -88,6 +88,7 @@ button {
   color: inherit;
   background: none;
   border: none;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -355,11 +356,15 @@ h1, h2, h3, h4 {
   margin-bottom: 1.75rem;
 }
 
+.hero-media {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
 .hero-media img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: var(--radius-lg);
+  border-radius: inherit;
 }
 
 @media (min-width: 860px) {
@@ -397,6 +402,10 @@ section { padding-block: var(--space-6); }
 .sobre-grid {
   display: grid;
   gap: var(--space-4);
+}
+.sobre-media {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 .sobre-media img {
   border-radius: var(--radius-lg);
@@ -471,6 +480,8 @@ section { padding-block: var(--space-6); }
 @media (min-width: 1024px) { .video-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .video-card {
+  display: block;
+  width: 100%;
   position: relative;
   aspect-ratio: 9 / 16;
   border-radius: var(--radius-md);
@@ -481,13 +492,18 @@ section { padding-block: var(--space-6); }
   transition: transform var(--dur-base) var(--ease);
 }
 .video-card:hover { transform: translateY(-3px); }
-.video-card img {
+.video-card img,
+.video-card video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--dur-slow) var(--ease);
 }
-.video-card:hover img { transform: scale(1.04); }
+.video-card video {
+  background: var(--bg-elevated-2);
+}
+.video-card:hover img,
+.video-card:hover video { transform: scale(1.04); }
 
 .video-card-overlay {
   position: absolute;
@@ -539,6 +555,8 @@ section { padding-block: var(--space-6); }
 @media (min-width: 1024px) { .galeria-grid { columns: 3; } }
 
 .galeria-item {
+  display: block;
+  width: 100%;
   break-inside: avoid;
   margin-bottom: 1.1rem;
   border-radius: var(--radius-lg);
@@ -548,7 +566,10 @@ section { padding-block: var(--space-6); }
   border: 1px solid var(--border);
 }
 .galeria-item img {
+  display: block;
   width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius-lg) - 1px);
   transition: transform var(--dur-slow) var(--ease);
 }
 .galeria-item:hover img { transform: scale(1.03); }
