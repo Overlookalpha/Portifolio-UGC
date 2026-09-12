@@ -721,6 +721,8 @@
       "pagina-raio",
       aparencia.raioMedio || 18
     );
+
+    atualizarPreviewAparencia();
   }
 
   /* ========================================================================
@@ -1068,13 +1070,15 @@
           );
         })
         .catch(function (erro) {
-          mostrarToast(
-            "Erro ao salvar: " +
-              (erro && erro.message
-                ? erro.message
-                : erro),
-            true
-          );
+          var mensagemErro =
+            erro && erro.code === "PGRST205"
+              ? "Falta criar a tabela conteudo_site no Supabase. As cores ainda não podem ser guardadas."
+              : "Erro ao salvar: " +
+                (erro && erro.message
+                  ? erro.message
+                  : erro);
+
+          mostrarToast(mensagemErro, true);
 
           console.error(erro);
         })
@@ -1159,6 +1163,7 @@
         marcarEscolha(temasEl, botao);
         atualizarEscolhaCor();
         atualizarEscolhaRaio();
+        atualizarPreviewAparencia();
         mostrarToast("Tema aplicado. Toque em Salvar alterações.");
       });
     }
@@ -1173,6 +1178,7 @@
 
         definirValor("pagina-cor-texto", botao.dataset.cor);
         marcarEscolha(coresEl, botao);
+        atualizarPreviewAparencia();
       });
     }
 
@@ -1186,14 +1192,32 @@
 
         definirValor("pagina-raio", botao.dataset.raio);
         marcarEscolha(raiosEl, botao);
+        atualizarPreviewAparencia();
       });
     }
 
     var campoCor = $("#pagina-cor-texto");
     var campoRaio = $("#pagina-raio");
 
-    if (campoCor) campoCor.addEventListener("input", atualizarEscolhaCor);
-    if (campoRaio) campoRaio.addEventListener("input", atualizarEscolhaRaio);
+    if (campoCor) campoCor.addEventListener("input", function () {
+      atualizarEscolhaCor();
+      atualizarPreviewAparencia();
+    });
+
+    if (campoRaio) campoRaio.addEventListener("input", function () {
+      atualizarEscolhaRaio();
+      atualizarPreviewAparencia();
+    });
+
+    $all(
+      '#pagina-cor-fundo, #pagina-cor-fundo-elevado, #pagina-cor-texto-secundario, #pagina-cor-destaque, #pagina-cor-texto-destaque, #pagina-fonte-titulos, #pagina-fonte-corpo'
+    ).forEach(function (campo) {
+      campo.addEventListener("input", atualizarPreviewAparencia);
+      campo.addEventListener("change", atualizarPreviewAparencia);
+    });
+
+    var preview = $("#preview-site");
+    if (preview) preview.addEventListener("load", atualizarPreviewAparencia);
 
     function atualizarEscolhaCor() {
       var atual = valor("pagina-cor-texto").toLowerCase();
@@ -1217,6 +1241,40 @@
     $all("button", container).forEach(function (botao) {
       botao.classList.toggle("is-selected", botao === escolhido);
     });
+  }
+
+  function atualizarPreviewAparencia() {
+    var preview = $("#preview-site");
+
+    if (!preview || !preview.contentDocument) return;
+
+    var raiz = preview.contentDocument.documentElement;
+    if (!raiz) return;
+
+    var raio = parseInt(valor("pagina-raio"), 10);
+
+    raiz.style.setProperty("--bg", valor("pagina-cor-fundo"));
+    raiz.style.setProperty("--bg-elevated", valor("pagina-cor-fundo-elevado"));
+    raiz.style.setProperty("--text", valor("pagina-cor-texto"));
+    raiz.style.setProperty("--text-muted", valor("pagina-cor-texto-secundario"));
+    raiz.style.setProperty("--accent", valor("pagina-cor-destaque"));
+    raiz.style.setProperty("--on-accent", valor("pagina-cor-texto-destaque"));
+
+    raiz.style.setProperty(
+      "--font-display",
+      '"' + valor("pagina-fonte-titulos") + '", Georgia, serif'
+    );
+
+    raiz.style.setProperty(
+      "--font-body",
+      '"' + valor("pagina-fonte-corpo") + '", Arial, sans-serif'
+    );
+
+    if (!isNaN(raio)) {
+      raiz.style.setProperty("--radius-sm", Math.round(raio * 0.45) + "px");
+      raiz.style.setProperty("--radius-md", raio + "px");
+      raiz.style.setProperty("--radius-lg", Math.min(60, Math.round(raio * 1.55)) + "px");
+    }
   }
 
   /* ========================================================================
