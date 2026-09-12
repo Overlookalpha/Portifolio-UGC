@@ -1498,6 +1498,7 @@
   var videosVisivel = false;
   var videosMovimentoAutomatico = false;
   var videosDirecao = 1;
+  var videosUltimoFrame = 0;
 
   function setupCarrosselVideos() {
     var grid = $("#video-grid");
@@ -1568,32 +1569,53 @@
       !document.hidden;
 
     if (!podeRodar) {
-      if (videosTimer) window.clearInterval(videosTimer);
+      if (videosTimer) window.cancelAnimationFrame(videosTimer);
       videosTimer = null;
+      videosUltimoFrame = 0;
       return;
     }
 
     if (videosTimer) return;
 
-    videosTimer = window.setInterval(function () {
-      if (Date.now() < videosPausaAte) return;
+    videosTimer = window.requestAnimationFrame(moverVideosContinuamente);
+  }
 
-      cards = Array.prototype.slice.call(
+  function moverVideosContinuamente(tempo) {
+    var grid = $("#video-grid");
+
+    if (!grid) {
+      videosTimer = null;
+      return;
+    }
+
+    if (!videosUltimoFrame) videosUltimoFrame = tempo;
+
+    var decorrido = Math.min(tempo - videosUltimoFrame, 50);
+    videosUltimoFrame = tempo;
+
+    if (Date.now() >= videosPausaAte) {
+      var cards = Array.prototype.slice.call(
         grid.querySelectorAll(".video-card:not(.is-hidden)")
       );
 
-      if (cards.length < 2) return;
+      if (cards.length > 1) {
+        var limite = Math.max(0, grid.scrollWidth - grid.clientWidth);
+        var proximaPosicao = grid.scrollLeft + decorrido * 0.022 * videosDirecao;
 
-      videosMovimentoAutomatico = true;
+        if (proximaPosicao >= limite) {
+          proximaPosicao = limite;
+          videosDirecao = -1;
+        } else if (proximaPosicao <= 0) {
+          proximaPosicao = 0;
+          videosDirecao = 1;
+        }
 
-      if (grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 2) {
-        videosDirecao = -1;
-      } else if (grid.scrollLeft <= 1) {
-        videosDirecao = 1;
+        videosMovimentoAutomatico = true;
+        grid.scrollLeft = proximaPosicao;
       }
+    }
 
-      grid.scrollLeft += 0.7 * videosDirecao;
-    }, 24);
+    videosTimer = window.requestAnimationFrame(moverVideosContinuamente);
   }
 
   // --------------------------------------------------------------------------
@@ -1756,6 +1778,7 @@
   var servicosVisivel = false;
   var servicosMovimentoAutomatico = false;
   var servicosDirecao = 1;
+  var servicosUltimoFrame = 0;
 
   function setupCarrosselServicos() {
     var grid = $("#servicos-grid");
@@ -1821,28 +1844,47 @@
       !document.hidden;
 
     if (!podeRodar) {
-      if (servicosTimer) window.clearInterval(servicosTimer);
+      if (servicosTimer) window.cancelAnimationFrame(servicosTimer);
       servicosTimer = null;
+      servicosUltimoFrame = 0;
       return;
     }
 
     if (servicosTimer) return;
 
-    servicosTimer = window.setInterval(function () {
-      if (Date.now() < servicosPausaAte) return;
+    servicosTimer = window.requestAnimationFrame(moverServicosContinuamente);
+  }
 
-      if (grid.children.length < 2) return;
+  function moverServicosContinuamente(tempo) {
+    var grid = $("#servicos-grid");
 
-      servicosMovimentoAutomatico = true;
+    if (!grid) {
+      servicosTimer = null;
+      return;
+    }
 
-      if (grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 2) {
+    if (!servicosUltimoFrame) servicosUltimoFrame = tempo;
+
+    var decorrido = Math.min(tempo - servicosUltimoFrame, 50);
+    servicosUltimoFrame = tempo;
+
+    if (Date.now() >= servicosPausaAte && grid.children.length > 1) {
+      var limite = Math.max(0, grid.scrollWidth - grid.clientWidth);
+      var proximaPosicao = grid.scrollLeft + decorrido * 0.022 * servicosDirecao;
+
+      if (proximaPosicao >= limite) {
+        proximaPosicao = limite;
         servicosDirecao = -1;
-      } else if (grid.scrollLeft <= 1) {
+      } else if (proximaPosicao <= 0) {
+        proximaPosicao = 0;
         servicosDirecao = 1;
       }
 
-      grid.scrollLeft += 0.7 * servicosDirecao;
-    }, 24);
+      servicosMovimentoAutomatico = true;
+      grid.scrollLeft = proximaPosicao;
+    }
+
+    servicosTimer = window.requestAnimationFrame(moverServicosContinuamente);
   }
 
   // --------------------------------------------------------------------------
