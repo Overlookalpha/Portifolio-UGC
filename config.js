@@ -53,7 +53,8 @@ var SITE_CONFIG = {
 
   header: {
     mostrar: true,
-    botaoTexto: "Contato"
+    botaoTexto: "Contato",
+    foto: ""
   },
 
   // --------------------------------------------------------------------------
@@ -535,6 +536,8 @@ var SITE_CONFIG = {
     fonteTitulos: "Fraunces",
 
     fonteCorpo: "Inter",
+
+    texturaFundo: "nenhuma",
 
     raioPequeno: 8,
 
