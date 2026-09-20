@@ -14,7 +14,7 @@
   ============================================================================
 */
 
-var CACHE_VERSAO = "v6";
+var CACHE_VERSAO = "v7";
 var CACHE_ESSENCIAL = "ugc-portfolio-essencial-" + CACHE_VERSAO;
 var CACHE_RUNTIME = "ugc-portfolio-runtime-" + CACHE_VERSAO;
 
@@ -24,6 +24,7 @@ var ARQUIVOS_ESSENCIAIS = [
   "./",
   "index.html",
   "styles.css",
+  "carousel-overrides.css",
   "script.js",
   "config.js",
   "manifest.webmanifest",
