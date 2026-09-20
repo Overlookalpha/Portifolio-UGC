@@ -1,9 +1,1808 @@
-PAINEL ADMIN
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
 
-Entrar
+  <title>Painel Admin — Portfólio</title>
 
-Acesso restrito — gerencie o conteúdo e o portfólio da sua página.
+  <meta name="theme-color" content="#0b0b0d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Admin">
 
-E-mail
-Senha
-Entrar
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-body">
+
+  <!-- =========================================================
+       LOGIN
+  ========================================================== -->
+
+  <div id="tela-login" class="admin-login">
+
+    <div class="admin-login-box">
+
+      <p class="eyebrow">Painel Admin</p>
+
+      <h1>Entrar</h1>
+
+      <p class="admin-login-sub">
+        Acesso restrito — gerencie o conteúdo e o portfólio da sua página.
+      </p>
+
+      <form id="form-login" class="admin-login-form">
+
+        <label class="admin-campo">
+          <span>E-mail</span>
+
+          <input
+            type="email"
+            id="login-email"
+            autocomplete="username"
+            required
+            inputmode="email"
+          >
+        </label>
+
+
+        <label class="admin-campo">
+          <span>Senha</span>
+
+          <input
+            type="password"
+            id="login-senha"
+            autocomplete="current-password"
+            required
+          >
+        </label>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary admin-btn-full"
+          id="btn-entrar"
+        >
+          Entrar
+        </button>
+
+
+        <p
+          class="admin-erro"
+          id="login-erro"
+          hidden
+        ></p>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PAINEL
+  ========================================================== -->
+
+  <div
+    id="tela-painel"
+    class="admin-painel"
+    hidden
+  >
+
+    <!-- ================= HEADER DO ADMIN ================= -->
+
+    <header class="admin-header">
+
+      <div>
+
+        <p class="eyebrow">
+          Painel Admin
+        </p>
+
+        <h1>
+          Meu portfólio
+        </h1>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="admin-btn-sair"
+        id="btn-sair"
+      >
+        Sair
+      </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         ABAS PRINCIPAIS
+    ====================================================== -->
+
+    <nav
+      class="admin-abas"
+      role="tablist"
+      aria-label="Área de edição"
+    >
+
+      <button
+        type="button"
+        class="admin-aba is-ativa"
+        id="aba-pagina"
+        data-aba="pagina"
+        role="tab"
+        aria-selected="true"
+        aria-controls="secao-pagina"
+      >
+        Página
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-aba"
+        id="aba-videos"
+        data-aba="videos"
+        role="tab"
+        aria-selected="false"
+        aria-controls="secao-videos"
+      >
+        Vídeos
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-aba"
+        id="aba-fotos"
+        data-aba="fotos"
+        role="tab"
+        aria-selected="false"
+        aria-controls="secao-fotos"
+      >
+        Fotos
+      </button>
+
+    </nav>
+
+
+    <!-- =====================================================
+         EDITOR DA PÁGINA
+    ====================================================== -->
+
+    <section
+      class="admin-secao admin-secao-pagina"
+      id="secao-pagina"
+      data-secao="pagina"
+      role="tabpanel"
+      aria-labelledby="aba-pagina"
+    >
+
+      <div class="admin-editor-intro">
+
+        <p class="eyebrow">
+          Editor visual
+        </p>
+
+        <h2>
+          Edite o que a marca vê.
+        </h2>
+
+        <p>
+          Organize todo o conteúdo do seu portfólio pelo painel.
+          A prévia ao lado usa o mesmo site público.
+        </p>
+
+      </div>
+
+
+      <div class="admin-editor-layout">
+
+
+        <!-- =================================================
+             COLUNA DO EDITOR
+        ================================================== -->
+
+        <form
+          class="admin-form-pagina"
+          id="form-pagina"
+        >
+
+
+          <!-- ================= IDENTIDADE ================= -->
+
+          <fieldset>
+
+            <legend>
+              Identidade
+            </legend>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Nome da creator
+              </span>
+
+              <input
+                id="pagina-nome"
+                type="text"
+                maxlength="80"
+                required
+              >
+
+            </label>
+
+            <div class="admin-campo admin-foto-cabecalho">
+              <span>Foto no cabeçalho fixo</span>
+
+              <div class="admin-foto-cabecalho-linha">
+                <div class="admin-foto-cabecalho-preview" id="pagina-header-foto-preview-wrap">
+                  <img id="pagina-header-foto-preview" alt="Prévia da foto da cliente" hidden>
+                  <span id="pagina-header-foto-placeholder">Sem foto</span>
+                </div>
+
+                <div class="admin-foto-cabecalho-acoes">
+                  <input id="pagina-header-foto-url" type="hidden">
+                  <input id="pagina-header-foto-arquivo" type="file" accept="image/*" hidden>
+                  <button class="admin-icon-btn" id="btn-header-foto" type="button">Escolher foto</button>
+                  <button class="admin-icon-btn admin-btn-perigo" id="btn-remover-header-foto" type="button">Remover</button>
+                </div>
+              </div>
+
+              <small id="pagina-header-foto-status">Use uma foto quadrada para obter o melhor resultado.</small>
+            </div>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Nome curto
+              </span>
+
+              <input
+                id="pagina-nome-curto"
+                type="text"
+                maxlength="40"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título principal
+              </span>
+
+              <input
+                id="pagina-titulo"
+                type="text"
+                maxlength="100"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Frase de impacto
+              </span>
+
+              <textarea
+                id="pagina-frase"
+                rows="3"
+                maxlength="220"
+              ></textarea>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição curta
+              </span>
+
+              <textarea
+                id="pagina-descricao"
+                rows="3"
+                maxlength="300"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= HERO ================= -->
+
+          <fieldset>
+
+            <legend>
+              Hero
+            </legend>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-hero-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Texto do botão
+              </span>
+
+              <input
+                id="pagina-hero-botao"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Destino do botão
+              </span>
+
+              <input
+                id="pagina-hero-destino"
+                type="text"
+                placeholder="#portfolio-videos"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Foto principal — caminho ou URL
+              </span>
+
+              <input
+                id="pagina-foto"
+                type="text"
+                placeholder="images/foto.jpg ou https://..."
+              >
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= VÍDEOS ================= -->
+
+          <fieldset>
+
+            <legend>
+              Secção de vídeos
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-videos-mostrar"
+              >
+
+              <span>
+                Mostrar secção de vídeos
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-videos-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-videos-titulo"
+                type="text"
+                maxlength="120"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição
+              </span>
+
+              <textarea
+                id="pagina-videos-descricao"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= GALERIA ================= -->
+
+          <fieldset>
+
+            <legend>
+              Secção de fotos
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-galeria-mostrar"
+              >
+
+              <span>
+                Mostrar galeria
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-galeria-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-galeria-titulo"
+                type="text"
+                maxlength="120"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição
+              </span>
+
+              <textarea
+                id="pagina-galeria-descricao"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= SERVIÇOS ================= -->
+
+          <fieldset>
+
+            <legend>
+              Serviços
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-servicos-mostrar"
+              >
+
+              <span>
+                Mostrar serviços
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-servicos-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-servicos-titulo"
+                type="text"
+                maxlength="140"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição
+              </span>
+
+              <textarea
+                id="pagina-servicos-descricao"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= PROCESSO ================= -->
+
+          <fieldset>
+
+            <legend>
+              Processo
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-processo-mostrar"
+              >
+
+              <span>
+                Mostrar secção "Como funciona"
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-processo-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-processo-titulo"
+                type="text"
+                maxlength="120"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição
+              </span>
+
+              <textarea
+                id="pagina-processo-descricao"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= MARCAS ================= -->
+
+          <fieldset>
+
+            <legend>
+              Marcas
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-marcas-mostrar"
+              >
+
+              <span>
+                Mostrar marcas
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-marcas-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-marcas-titulo"
+                type="text"
+                maxlength="140"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição
+              </span>
+
+              <textarea
+                id="pagina-marcas-descricao"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= SOBRE ================= -->
+
+          <fieldset>
+
+            <legend>
+              Sobre
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-sobre-mostrar"
+              >
+
+              <span>
+                Mostrar secção Sobre
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-sobre-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-sobre-titulo"
+                type="text"
+                maxlength="140"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Foto — caminho ou URL
+              </span>
+
+              <input
+                id="pagina-sobre-foto"
+                type="text"
+                placeholder="images/foto.jpg ou https://..."
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Texto de apresentação
+              </span>
+
+              <textarea
+                id="pagina-sobre-texto"
+                rows="8"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= RESULTADOS ================= -->
+
+          <fieldset>
+
+            <legend>
+              Resultados
+            </legend>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-resultados-mostrar"
+              >
+
+              <span>
+                Mostrar resultados
+              </span>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-resultados-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-resultados-titulo"
+                type="text"
+                maxlength="140"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Descrição
+              </span>
+
+              <textarea
+                id="pagina-resultados-descricao"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= CONTACTO ================= -->
+
+          <fieldset>
+
+            <legend>
+              Contacto
+            </legend>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-contato-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-contato-titulo"
+                type="text"
+                maxlength="140"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                E-mail
+              </span>
+
+              <input
+                id="pagina-email"
+                type="email"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                WhatsApp — só números
+              </span>
+
+              <input
+                id="pagina-whatsapp"
+                inputmode="numeric"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Mensagem padrão do WhatsApp
+              </span>
+
+              <textarea
+                id="pagina-whatsapp-mensagem"
+                rows="3"
+              ></textarea>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Instagram — URL
+              </span>
+
+              <input
+                id="pagina-instagram"
+                type="url"
+                placeholder="https://instagram.com/..."
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                TikTok — URL
+              </span>
+
+              <input
+                id="pagina-tiktok"
+                type="url"
+                placeholder="https://tiktok.com/@..."
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                YouTube — URL
+              </span>
+
+              <input
+                id="pagina-youtube"
+                type="url"
+                placeholder="https://youtube.com/..."
+              >
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= CTA ================= -->
+
+          <fieldset>
+
+            <legend>
+              Convite final
+            </legend>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Eyebrow
+              </span>
+
+              <input
+                id="pagina-cta-eyebrow"
+                type="text"
+                maxlength="60"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-cta-titulo"
+                type="text"
+                maxlength="140"
+              >
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Texto
+              </span>
+
+              <textarea
+                id="pagina-cta-texto"
+                rows="4"
+              ></textarea>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Texto do botão principal
+              </span>
+
+              <input
+                id="pagina-cta-botao"
+                type="text"
+                maxlength="80"
+              >
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= RODAPÉ ================= -->
+
+          <fieldset>
+
+            <legend>
+              Rodapé
+            </legend>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Título
+              </span>
+
+              <input
+                id="pagina-footer-titulo"
+                type="text"
+                maxlength="80"
+              >
+
+            </label>
+
+
+            <label class="admin-card-destaque">
+
+              <input
+                type="checkbox"
+                id="pagina-footer-admin"
+              >
+
+              <span>
+                Mostrar link do painel administrativo
+              </span>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- ================= APARÊNCIA ================= -->
+
+          <fieldset>
+
+            <legend>
+              Aparência
+            </legend>
+
+            <div class="admin-paleta-secao">
+
+              <span class="admin-paleta-titulo">
+                Temas prontos
+              </span>
+
+              <p class="admin-paleta-ajuda">
+                Toque numa opção para mudar todas as cores do site.
+              </p>
+
+              <div class="admin-temas" id="admin-temas">
+
+                <button type="button" class="admin-tema" data-tema="bege">
+                  <span class="admin-tema-cores" aria-hidden="true">
+                    <i style="--cor:#f8f1e7"></i><i style="--cor:#2f211c"></i><i style="--cor:#bd8b64"></i>
+                  </span>
+                  <strong>Bege elegante</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="rose">
+                  <span class="admin-tema-cores" aria-hidden="true">
+                    <i style="--cor:#fff5f5"></i><i style="--cor:#3a2529"></i><i style="--cor:#c9828d"></i>
+                  </span>
+                  <strong>Rosé delicado</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="oliva">
+                  <span class="admin-tema-cores" aria-hidden="true">
+                    <i style="--cor:#f3f1e8"></i><i style="--cor:#273126"></i><i style="--cor:#87906b"></i>
+                  </span>
+                  <strong>Oliva natural</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="minimal">
+                  <span class="admin-tema-cores" aria-hidden="true">
+                    <i style="--cor:#f7f5f0"></i><i style="--cor:#1c1b18"></i><i style="--cor:#625f58"></i>
+                  </span>
+                  <strong>Minimalista</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="lavanda">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#f5f0ff"></i><i style="--cor:#2f2145"></i><i style="--cor:#8d6cc7"></i></span>
+                  <strong>Lavanda moderna</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="ceu">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#eef7ff"></i><i style="--cor:#17324d"></i><i style="--cor:#4d91c6"></i></span>
+                  <strong>Azul céu</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="solar">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#fff8dc"></i><i style="--cor:#392b18"></i><i style="--cor:#e5a921"></i></span>
+                  <strong>Amarelo solar</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="menta">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#edfff8"></i><i style="--cor:#173b31"></i><i style="--cor:#3aa982"></i></span>
+                  <strong>Menta fresca</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="terracota">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#fff1e9"></i><i style="--cor:#48271f"></i><i style="--cor:#c86645"></i></span>
+                  <strong>Terracota</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="oceano">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#0e2635"></i><i style="--cor:#f2fbff"></i><i style="--cor:#3dd4d0"></i></span>
+                  <strong>Oceano escuro</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="noite">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#15131d"></i><i style="--cor:#f8f4ff"></i><i style="--cor:#b892ff"></i></span>
+                  <strong>Noite violeta</strong>
+                </button>
+
+                <button type="button" class="admin-tema" data-tema="cafe">
+                  <span class="admin-tema-cores" aria-hidden="true"><i style="--cor:#241914"></i><i style="--cor:#fff7ef"></i><i style="--cor:#d89964"></i></span>
+                  <strong>Café sofisticado</strong>
+                </button>
+
+              </div>
+
+            </div>
+
+            <div class="admin-paleta-secao">
+              <span class="admin-paleta-titulo">Textura do fundo</span>
+              <p class="admin-paleta-ajuda">Combine qualquer cor com uma textura. A opção lisa mantém o visual atual.</p>
+              <input type="hidden" id="pagina-textura-fundo" value="nenhuma">
+              <div class="admin-texturas" id="admin-texturas" aria-label="Texturas para o fundo">
+                <button type="button" data-textura="nenhuma" class="is-selected"><i class="textura-lisa"></i><strong>Liso</strong></button>
+                <button type="button" data-textura="papel"><i class="textura-papel"></i><strong>Papel</strong></button>
+                <button type="button" data-textura="granulado"><i class="textura-granulado"></i><strong>Granulado</strong></button>
+                <button type="button" data-textura="pontos"><i class="textura-pontos"></i><strong>Pontos</strong></button>
+                <button type="button" data-textura="grade"><i class="textura-grade"></i><strong>Grade</strong></button>
+                <button type="button" data-textura="aurora"><i class="textura-aurora"></i><strong>Aurora</strong></button>
+              </div>
+            </div>
+
+            <div class="admin-paleta-secao">
+
+              <span class="admin-paleta-titulo">
+                Cor principal das letras
+              </span>
+
+              <div class="admin-cores-letra" id="admin-cores-letra" aria-label="Cores prontas para as letras">
+                <button type="button" data-cor="#1c1b18" style="--cor:#1c1b18" aria-label="Preto suave"></button>
+                <button type="button" data-cor="#3a2922" style="--cor:#3a2922" aria-label="Marrom escuro"></button>
+                <button type="button" data-cor="#7a4329" style="--cor:#7a4329" aria-label="Terracota"></button>
+                <button type="button" data-cor="#7d5661" style="--cor:#7d5661" aria-label="Rosé escuro"></button>
+                <button type="button" data-cor="#465345" style="--cor:#465345" aria-label="Verde oliva"></button>
+                <button type="button" data-cor="#344b5d" style="--cor:#344b5d" aria-label="Azul petróleo"></button>
+                <button type="button" data-cor="#5a486f" style="--cor:#5a486f" aria-label="Roxo elegante"></button>
+                <button type="button" data-cor="#6a625c" style="--cor:#6a625c" aria-label="Cinza quente"></button>
+              </div>
+
+            </div>
+
+
+            <div class="admin-appearance-grid">
+
+
+              <label class="admin-campo">
+
+                <span>
+                  Fundo
+                </span>
+
+                <input
+                  id="pagina-cor-fundo"
+                  type="color"
+                  value="#f7f5f0"
+                >
+
+              </label>
+
+
+              <label class="admin-campo">
+
+                <span>
+                  Fundo elevado
+                </span>
+
+                <input
+                  id="pagina-cor-fundo-elevado"
+                  type="color"
+                  value="#ffffff"
+                >
+
+              </label>
+
+
+              <label class="admin-campo">
+
+                <span>
+                  Texto
+                </span>
+
+                <input
+                  id="pagina-cor-texto"
+                  type="color"
+                  value="#1c1b18"
+                >
+
+              </label>
+
+
+              <label class="admin-campo">
+
+                <span>
+                  Texto secundário
+                </span>
+
+                <input
+                  id="pagina-cor-texto-secundario"
+                  type="color"
+                  value="#625f58"
+                >
+
+              </label>
+
+
+              <label class="admin-campo">
+
+                <span>
+                  Destaque
+                </span>
+
+                <input
+                  id="pagina-cor-destaque"
+                  type="color"
+                  value="#1c1b18"
+                >
+
+              </label>
+
+
+              <label class="admin-campo">
+
+                <span>
+                  Texto sobre destaque
+                </span>
+
+                <input
+                  id="pagina-cor-texto-destaque"
+                  type="color"
+                  value="#ffffff"
+                >
+
+              </label>
+
+            </div>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Fonte dos títulos
+              </span>
+
+              <select id="pagina-fonte-titulos">
+
+                <option value="Fraunces">
+                  Fraunces
+                </option>
+
+                <option value="Inter">
+                  Inter
+                </option>
+
+                <option value="Georgia">
+                  Georgia
+                </option>
+
+                <option value="Arial">
+                  Arial
+                </option>
+
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="DM Sans">DM Sans</option>
+                <option value="Space Grotesk">Space Grotesk</option>
+
+              </select>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Fonte do corpo
+              </span>
+
+              <select id="pagina-fonte-corpo">
+
+                <option value="Inter">
+                  Inter
+                </option>
+
+                <option value="Fraunces">
+                  Fraunces
+                </option>
+
+                <option value="Arial">
+                  Arial
+                </option>
+
+                <option value="Georgia">
+                  Georgia
+                </option>
+
+                <option value="DM Sans">DM Sans</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Space Grotesk">Space Grotesk</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Cormorant Garamond">Cormorant Garamond</option>
+
+              </select>
+
+            </label>
+
+
+            <label class="admin-campo">
+
+              <span>
+                Arredondamento dos cards
+              </span>
+
+              <input
+                id="pagina-raio"
+                type="range"
+                min="0"
+                max="40"
+                step="1"
+                value="18"
+              >
+
+            </label>
+
+            <div class="admin-raios" id="admin-raios" aria-label="Opções de arredondamento dos cards">
+              <button type="button" data-raio="14">Suave</button>
+              <button type="button" data-raio="24">Arredondado</button>
+              <button type="button" data-raio="34">Bem arredondado</button>
+            </div>
+
+          </fieldset>
+
+
+          <!-- ================= SALVAR ================= -->
+
+          <button
+            type="submit"
+            class="btn btn-primary admin-btn-full"
+          >
+            Salvar alterações
+          </button>
+
+        </form>
+
+
+        <!-- =================================================
+             PRÉVIA DO SITE
+        ================================================== -->
+
+        <aside
+          class="admin-preview-wrap"
+          aria-label="Prévia do site público"
+        >
+
+          <div class="admin-preview-top">
+
+            <span>
+              Prévia pública
+            </span>
+
+            <a
+              href="index.html"
+              target="_blank"
+              rel="noopener"
+            >
+              Abrir site ↗️
+            </a>
+
+          </div>
+
+
+          <iframe
+            id="preview-site"
+            title="Prévia do portfólio"
+            src="index.html"
+          ></iframe>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         VÍDEOS
+    ====================================================== -->
+
+    <section
+      class="admin-secao"
+      id="secao-videos"
+      data-secao="videos"
+      role="tabpanel"
+      aria-labelledby="aba-videos"
+      hidden
+    >
+
+      <div class="admin-editor-intro">
+
+        <p class="eyebrow">
+          Conteúdo
+        </p>
+
+        <h2>
+          Vídeos
+        </h2>
+
+        <p>
+          Adicione, organize e destaque os vídeos que aparecem no seu portfólio.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn btn-primary admin-btn-full admin-btn-adicionar"
+        id="btn-add-video"
+      >
+
+        <span class="admin-btn-icone">
+          +
+        </span>
+
+        Adicionar vídeo
+
+      </button>
+
+
+      <input
+        type="file"
+        id="input-video"
+        accept="video/*"
+        hidden
+      >
+
+
+      <div
+        class="admin-upload-status"
+        id="status-upload-video"
+        hidden
+      ></div>
+
+
+      <div
+        class="admin-lista"
+        id="lista-videos"
+      ></div>
+
+
+      <p
+        class="admin-vazio"
+        id="vazio-videos"
+        hidden
+      >
+        Nenhum vídeo cadastrado ainda.
+        Toque em "Adicionar vídeo" pra começar.
+      </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOTOS
+    ====================================================== -->
+
+    <section
+      class="admin-secao"
+      id="secao-fotos"
+      data-secao="fotos"
+      role="tabpanel"
+      aria-labelledby="aba-fotos"
+      hidden
+    >
+
+      <div class="admin-editor-intro">
+
+        <p class="eyebrow">
+          Conteúdo
+        </p>
+
+        <h2>
+          Fotos
+        </h2>
+
+        <p>
+          Adicione, organize e destaque as imagens que aparecem no seu portfólio.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn btn-primary admin-btn-full admin-btn-adicionar"
+        id="btn-add-foto"
+      >
+
+        <span class="admin-btn-icone">
+          +
+        </span>
+
+        Adicionar foto
+
+      </button>
+
+
+      <input
+        type="file"
+        id="input-foto"
+        accept="image/*"
+        hidden
+      >
+
+
+      <div
+        class="admin-upload-status"
+        id="status-upload-foto"
+        hidden
+      ></div>
+
+
+      <div
+        class="admin-lista"
+        id="lista-fotos"
+      ></div>
+
+
+      <p
+        class="admin-vazio"
+        id="vazio-fotos"
+        hidden
+      >
+        Nenhuma foto cadastrada ainda.
+        Toque em "Adicionar foto" pra começar.
+      </p>
+
+    </section>
+
+  </div>
+
+
+  <!-- =========================================================
+       MODELO DE CARD DE MÍDIA
+  ========================================================== -->
+
+  <template id="template-card-midia">
+
+    <article class="admin-card">
+
+      <div class="admin-card-media">
+
+        <img
+          class="admin-card-thumb"
+          alt=""
+        >
+
+
+        <span
+          class="admin-card-play"
+          hidden
+        >
+          ▶️
+        </span>
+
+      </div>
+
+
+      <div class="admin-card-corpo">
+
+        <label class="admin-campo admin-campo-compacto">
+
+          <span>
+            Título / legenda
+          </span>
+
+          <input
+            type="text"
+            class="admin-input-titulo"
+            maxlength="120"
+          >
+
+        </label>
+
+
+        <label class="admin-campo admin-campo-compacto">
+
+          <span>
+            Categoria
+          </span>
+
+          <select
+            class="admin-select-categoria"
+          ></select>
+
+        </label>
+
+
+        <label class="admin-card-destaque">
+
+          <input
+            type="checkbox"
+            class="admin-checkbox-destaque"
+          >
+
+          <span>
+            Destaque
+          </span>
+
+        </label>
+
+
+        <div class="admin-card-acoes">
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-subir"
+            aria-label="Mover para cima"
+          >
+            ↑
+          </button>
+
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-descer"
+            aria-label="Mover para baixo"
+          >
+            ↓
+          </button>
+
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-substituir"
+            aria-label="Substituir arquivo"
+          >
+            Substituir
+          </button>
+
+
+          <button
+            type="button"
+            class="admin-icon-btn admin-btn-excluir admin-btn-perigo"
+            aria-label="Excluir"
+          >
+            Excluir
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  </template>
+
+
+  <!-- =========================================================
+       TOAST
+  ========================================================== -->
+
+  <div
+    class="admin-toast"
+    id="admin-toast"
+    hidden
+  ></div>
+
+
+  <!-- =========================================================
+       SCRIPTS
+  ========================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+
+</body>
+</html>
