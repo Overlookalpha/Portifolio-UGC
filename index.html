@@ -1,134 +1,654 @@
-Pular para o conteúdo
-EVELLYN
-Vídeos
-Fotos
-Serviços
-Marcas
-Sobre
-Contato
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-UGC CREATOR
+<title>Nome da Creator — UGC Creator | Portfólio &amp; Media Kit</title>
 
-Evellyn
+<meta name="description" content="Portfólio e media kit de uma UGC Creator — conteúdo autêntico para marcas que querem conectar com pessoas de verdade.">
+<link rel="canonical" href="https://seudominio.com/">
 
-Conteúdo autêntico que transforma produtos em experiências.
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nome da Creator — UGC Creator | Portfólio & Media Kit">
+<meta property="og:description" content="Portfólio e media kit de uma UGC Creator — conteúdo autêntico para marcas que querem conectar com pessoas de verdade.">
+<meta property="og:image" content="images/og-cover.svg">
+<meta property="og:url" content="https://seudominio.com/">
+<meta property="og:locale" content="pt_BR">
 
-Vamos trabalhar juntas
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nome da Creator — UGC Creator | Portfólio & Media Kit">
+<meta name="twitter:description" content="Portfólio e media kit de uma UGC Creator — conteúdo autêntico para marcas que querem conectar com pessoas de verdade.">
+<meta name="twitter:image" content="images/og-cover.svg">
 
-PORTFÓLIO
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f7f5f0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Creator">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 
-Vídeos UGC
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-Conteúdo pensado para conectar marcas e pessoas.
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="carousel-overrides.css">
+</head>
 
-Todos
-Beauty
-Skincare
-Lifestyle
-Fashion
-Food
-Travel
-Unboxing
-Review
-Product Demo
-Testimonial
-Voice Over
-Talking Head
-Aesthetic Content
-PRODUCT DEMO
-IMG_8677
-BEAUTY
-IMG_8508
-SKINCARE
-IMG_7258
-BEAUTY
-IMG_6392
-BEAUTY
-abc8904f7b7c4bfea103de76e06b35d2
+<body>
 
-GALERIA
+<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
 
-Fotografia
+<!-- ============================= HEADER ============================= -->
 
-Imagens com estética natural e foco no produto.
+<header class="site-header" id="site-header">
+  <div class="container">
+    <div class="header-capsule">
 
-IMG_8666
-8066EF6D-9FA6-4A1B-8713-FC4D3EA77A22
-CA56B99C-428E-462C-9ED3-E0EF53B9D9E9
-82E41101-D80C-4549-9C8D-E13DAB21AA4A
-F8B29D3B-A214-4853-BC30-904B638C983E
+      <a href="#hero" class="brand" id="brand-link">
+        <img class="brand-foto" id="brand-foto" alt="" hidden>
+        <span id="brand-nome">Nome da Creator</span>
+      </a>
 
-SERVIÇOS
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="#portfolio-videos">Vídeos</a></li>
+          <li><a href="#galeria">Fotos</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#marcas">Marcas</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+        </ul>
+      </nav>
 
-O que posso criar para sua marca
+      <div class="header-actions">
 
-UGC Videos
+        <a href="#contato" class="btn-contato">
+          Contato
+        </a>
 
-Vídeos autênticos, no estilo conteúdo de rede social, prontos pra usar como anúncio ou publicação orgânica.
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="main-nav"
+          aria-label="Abrir menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-Reels & Stories
+      </div>
 
-Conteúdo dinâmico pensado pro formato vertical, com edição ágil e ritmo de feed.
+    </div>
+  </div>
+</header>
 
-Product Photography
 
-Fotos de produto com direção de arte, luz e composição cuidadas.
+<main id="conteudo-principal">
 
-Unboxing
+  <!-- ============================= HERO ============================= -->
 
-Experiência de abertura de produto, capturando a primeira impressão de forma genuína.
+  <section class="hero" id="hero">
 
-Reviews
+    <div class="container hero-grid">
 
-Avaliação honesta do produto, destacando benefícios reais pro público.
+      <div class="hero-text" data-reveal>
 
-Tutorials
+        <p class="eyebrow" id="hero-eyebrow">
+          UGC Creator
+        </p>
 
-Conteúdo educativo mostrando como usar o produto na prática.
+        <h1 id="hero-nome">
+          Nome da Creator<span class="hero-dot">.</span>
+        </h1>
 
-Product Demonstrations
+        <p class="hero-frase" id="hero-frase">
+          Conteúdo autêntico que transforma produtos em experiências.
+        </p>
 
-Demonstração clara do funcionamento e dos diferenciais do produto.
+        <a
+          href="#portfolio-videos"
+          class="btn btn-primary"
+          id="hero-botao"
+        >
+          Ver portfólio
+        </a>
 
-Voice Over
+      </div>
 
-Narração para vídeos institucionais, anúncios ou conteúdo de marca.
+      <div class="hero-media" data-reveal>
 
-Lifestyle Content
+        <img
+          id="hero-foto"
+          src="images/hero-placeholder.svg"
+          alt=""
+          role="presentation"
+        >
 
-Produto inserido de forma natural no dia a dia, sem parecer publicidade forçada.
+      </div>
 
-Testimonial
+    </div>
 
-Depoimento autêntico sobre a experiência com o produto ou serviço.
+  </section>
 
-Creative Concepts
 
-Desenvolvimento de conceito criativo sob medida para a campanha da marca.
+  <!-- ===================== PORTFÓLIO DE VÍDEOS ===================== -->
 
-VAMOS CONVERSAR
+  <section
+    class="portfolio-videos"
+    id="portfolio-videos"
+  >
 
-Vamos criar algo incrível para sua marca?
+    <div class="container">
 
-Estou disponível para parcerias e sempre aberta a novos projetos. Me conta sobre a sua marca e vamos construir um conteúdo que conecta de verdade.
+      <div class="section-head" data-reveal>
 
-Falar no WhatsApp
-Enviar e-mail
-Instagram
+        <p
+          class="eyebrow"
+          data-section-eyebrow="videos"
+        >
+          Portfólio
+        </p>
 
-Evellyn
+        <h2 data-section-title="videos">
+          Vídeos UGC
+        </h2>
 
-UGC Creator
+        <p
+          class="section-sub"
+          data-section-description="videos"
+        >
+          Conteúdo pensado pra rede social: autêntico, vertical e feito pra parar o scroll.
+        </p>
 
-Instagram
-TikTok
-E-mail
+      </div>
 
-©️ 2026 Evellyn. Todos os direitos reservados.
 
-Painel administrativo
+      <div
+        class="filtros"
+        id="video-filtros"
+        data-reveal
+        role="group"
+        aria-label="Filtrar vídeos por categoria"
+      ></div>
 
-Instale este portfólio como app no seu celular.
 
-Instalar
-Agora não
+      <div
+        class="video-grid"
+        id="video-grid"
+        data-reveal
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================= GALERIA DE FOTOS ========================= -->
+
+  <section
+    class="galeria"
+    id="galeria"
+  >
+
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+
+        <p
+          class="eyebrow"
+          data-section-eyebrow="galeria"
+        >
+          Galeria
+        </p>
+
+        <h2 data-section-title="galeria">
+          Fotografia
+        </h2>
+
+        <p
+          class="section-sub"
+          data-section-description="galeria"
+        >
+          Produtos, lifestyle e bastidores — um retrato do olhar por trás do conteúdo.
+        </p>
+
+      </div>
+
+
+      <div
+        class="galeria-grid"
+        id="galeria-grid"
+        data-reveal
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================ SERVIÇOS ============================ -->
+
+  <section
+    class="servicos"
+    id="servicos"
+  >
+
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+
+        <p
+          class="eyebrow"
+          data-section-eyebrow="servicos"
+        >
+          Serviços
+        </p>
+
+        <h2 data-section-title="servicos">
+          O que posso criar para sua marca
+        </h2>
+
+        <p
+          class="section-sub"
+          data-section-description="servicos"
+        ></p>
+
+      </div>
+
+
+      <div
+        class="servicos-grid"
+        id="servicos-grid"
+        data-reveal
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================== PROCESSO ============================== -->
+
+  <section
+    class="processo"
+    id="processo"
+    hidden
+  >
+
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+
+        <p
+          class="eyebrow"
+          data-section-eyebrow="processo"
+        >
+          Processo
+        </p>
+
+        <h2 data-section-title="processo">
+          Como funciona
+        </h2>
+
+        <p
+          class="section-sub"
+          data-section-description="processo"
+        ></p>
+
+      </div>
+
+
+      <div
+        class="processo-grid"
+        id="processo-grid"
+        data-reveal
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================== MARCAS ============================== -->
+
+  <section
+    class="marcas"
+    id="marcas"
+  >
+
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+
+        <p
+          class="eyebrow"
+          data-section-eyebrow="marcas"
+        >
+          Parcerias
+        </p>
+
+        <h2 data-section-title="marcas">
+          Marcas com as quais já trabalhei
+        </h2>
+
+        <p
+          class="section-sub"
+          data-section-description="marcas"
+        ></p>
+
+      </div>
+
+
+      <div
+        class="marcas-grid"
+        id="marcas-grid"
+        data-reveal
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================= SOBRE ============================= -->
+
+  <section
+    class="sobre"
+    id="sobre"
+  >
+
+    <div class="container sobre-grid">
+
+      <div
+        class="sobre-media"
+        data-reveal
+      >
+
+        <img
+          id="sobre-foto"
+          src="images/sobre-placeholder.svg"
+          alt="Foto de apresentação"
+          loading="lazy"
+        >
+
+      </div>
+
+
+      <div
+        class="sobre-texto-wrap"
+        data-reveal
+      >
+
+        <p
+          class="eyebrow"
+          id="sobre-eyebrow"
+        >
+          Sobre mim
+        </p>
+
+        <h2 id="sobre-titulo">
+          Quem cria esse conteúdo
+        </h2>
+
+        <div
+          id="sobre-texto"
+          class="sobre-texto"
+        ></div>
+
+        <ul
+          id="sobre-destaques"
+          class="sobre-destaques"
+        ></ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================ RESULTADOS ============================ -->
+
+  <section
+    class="resultados"
+    id="resultados"
+    hidden
+  >
+
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+
+        <p
+          class="eyebrow"
+          data-section-eyebrow="resultados"
+        >
+          Resultados
+        </p>
+
+        <h2 data-section-title="resultados"></h2>
+
+        <p
+          class="section-sub"
+          data-section-description="resultados"
+        ></p>
+
+      </div>
+
+
+      <div
+        class="resultados-grid"
+        id="resultados-grid"
+        data-reveal
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================== CTA COMERCIAL ========================== -->
+
+  <section
+    class="cta-final"
+    id="contato"
+  >
+
+    <div
+      class="container"
+      data-reveal
+    >
+
+      <p
+        class="eyebrow"
+        id="cta-eyebrow"
+      >
+        Contato
+      </p>
+
+      <h2 id="cta-titulo">
+        Vamos criar algo incrível para sua marca?
+      </h2>
+
+      <p
+        class="cta-texto"
+        id="cta-texto"
+      >
+        Estou disponível para parcerias e sempre aberta a novos projetos.
+      </p>
+
+
+      <div class="cta-actions">
+
+        <a
+          href="#"
+          id="cta-whatsapp"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener"
+        >
+          Falar no WhatsApp
+        </a>
+
+        <a
+          href="#"
+          id="cta-email"
+          class="btn btn-ghost"
+        >
+          Enviar e-mail
+        </a>
+
+        <a
+          href="#"
+          id="cta-instagram"
+          class="btn btn-ghost"
+          target="_blank"
+          rel="noopener"
+        >
+          Instagram
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- ============================== FOOTER ============================== -->
+
+<footer class="site-footer">
+
+  <div class="container footer-inner">
+
+    <div class="footer-brand">
+
+      <p
+        class="footer-nome"
+        id="footer-nome"
+      >
+        Nome da Creator
+      </p>
+
+      <p
+        class="footer-titulo"
+        id="footer-titulo"
+      >
+        UGC Creator
+      </p>
+
+    </div>
+
+
+    <ul
+      class="footer-links"
+      id="footer-links"
+    ></ul>
+
+
+    <p
+      class="footer-copy"
+      id="footer-copy"
+    >
+      ©️ 2026 Nome da Creator. Todos os direitos reservados.
+    </p>
+
+
+    <p class="footer-admin-link">
+      <a href="admin.html">
+        Painel administrativo
+      </a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+<!-- ============================ MODAL / LIGHTBOX ============================ -->
+
+<div
+  class="modal-overlay"
+  id="modal-overlay"
+  hidden
+>
+
+  <div
+    class="modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Visualização ampliada"
+  >
+
+    <button
+      class="modal-close"
+      id="modal-close"
+      aria-label="Fechar"
+    >
+      &times;
+    </button>
+
+    <div
+      class="modal-body"
+      id="modal-body"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- ============================ INSTALL TOAST ============================ -->
+
+<div
+  class="install-toast"
+  id="install-toast"
+  hidden
+>
+
+  <p>
+    Instale este portfólio como app no seu celular.
+  </p>
+
+  <div class="install-toast-actions">
+
+    <button
+      id="install-toast-btn"
+      class="btn btn-primary btn-small"
+    >
+      Instalar
+    </button>
+
+    <button
+      id="install-toast-dismiss"
+      class="btn btn-ghost btn-small"
+      aria-label="Dispensar"
+    >
+      Agora não
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ============================ SCRIPTS ============================ -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
