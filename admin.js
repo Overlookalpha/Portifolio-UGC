@@ -46,6 +46,7 @@
     wireAbas();
     wireAdicionar();
     wireEditorPagina();
+    wireFotoCabecalho();
     wireAparencia();
 
     sb.auth.getSession().then(function (resposta) {
@@ -378,6 +379,7 @@
     var cta = dados.cta || {};
     var rodape = dados.rodape || {};
     var aparencia = dados.aparencia || {};
+    var header = dados.header || {};
 
     /* IDENTIDADE */
 
@@ -718,6 +720,20 @@
     );
 
     definirValor(
+      "pagina-header-foto-url",
+      header.foto || ""
+    );
+
+    atualizarPreviewFotoCabecalho(
+      header.foto || ""
+    );
+
+    definirValor(
+      "pagina-textura-fundo",
+      aparencia.texturaFundo || "nenhuma"
+    );
+
+    definirValor(
       "pagina-raio",
       aparencia.raioMedio || 18
     );
@@ -747,6 +763,7 @@
     if (!dados.cta) dados.cta = {};
     if (!dados.rodape) dados.rodape = {};
     if (!dados.aparencia) dados.aparencia = {};
+    if (!dados.header) dados.header = {};
 
     /* IDENTIDADE */
 
@@ -784,6 +801,9 @@
 
     dados.descricaoCurta =
       dados.identidade.descricaoCurta;
+
+    dados.header.foto =
+      valor("pagina-header-foto-url").trim();
 
     /* HERO */
 
@@ -986,6 +1006,9 @@
     dados.aparencia.fonteCorpo =
       valor("pagina-fonte-corpo");
 
+    dados.aparencia.texturaFundo =
+      valor("pagina-textura-fundo") || "nenhuma";
+
     var raio = parseInt(
       valor("pagina-raio"),
       10
@@ -1011,6 +1034,110 @@
   /* ========================================================================
      SALVAR PÁGINA
   ======================================================================== */
+
+  function atualizarPreviewFotoCabecalho(url) {
+    var imagem = $("#pagina-header-foto-preview");
+    var placeholder = $("#pagina-header-foto-placeholder");
+    var botaoRemover = $("#btn-remover-header-foto");
+    var botaoEscolher = $("#btn-header-foto");
+
+    if (imagem) {
+      imagem.hidden = !url;
+
+      if (url) {
+        imagem.src = url;
+      } else {
+        imagem.removeAttribute("src");
+      }
+    }
+
+    if (placeholder) placeholder.hidden = !!url;
+    if (botaoRemover) botaoRemover.disabled = !url;
+    if (botaoEscolher && !botaoEscolher.disabled) {
+      botaoEscolher.textContent = url ? "Trocar foto" : "Escolher foto";
+    }
+  }
+
+  function wireFotoCabecalho() {
+    var botao = $("#btn-header-foto");
+    var remover = $("#btn-remover-header-foto");
+    var arquivo = $("#pagina-header-foto-arquivo");
+    var campoUrl = $("#pagina-header-foto-url");
+    var status = $("#pagina-header-foto-status");
+
+    if (!botao || !arquivo || !campoUrl) return;
+
+    botao.addEventListener("click", function () {
+      arquivo.click();
+    });
+
+    arquivo.addEventListener("change", function () {
+      var file = arquivo.files && arquivo.files[0];
+
+      if (!file) return;
+
+      if (!file.type || file.type.indexOf("image/") !== 0) {
+        mostrarToast("Escolha um arquivo de imagem.", true);
+        arquivo.value = "";
+        return;
+      }
+
+      if (file.size > 8 * 1024 * 1024) {
+        mostrarToast("A imagem deve ter no máximo 8 MB.", true);
+        arquivo.value = "";
+        return;
+      }
+
+      var caminho = gerarNomeArquivo("perfil", file);
+
+      botao.disabled = true;
+      botao.textContent = "Enviando...";
+      if (status) status.textContent = "Enviando a foto...";
+
+      sb.storage
+        .from(BUCKET)
+        .upload(caminho, file, {
+          cacheControl: "3600",
+          upsert: false
+        })
+        .then(function (resposta) {
+          if (resposta.error) throw resposta.error;
+
+          var url = obterUrlPublica(caminho);
+
+          if (!url) throw new Error("Não foi possível obter a URL da foto.");
+
+          campoUrl.value = url;
+          atualizarPreviewFotoCabecalho(url);
+          botao.textContent = "Trocar foto";
+          if (status) status.textContent = "Foto pronta. Clique em Salvar alterações para publicar.";
+          mostrarToast("Foto enviada. Salve as alterações para publicar.");
+        })
+        .catch(function (erro) {
+          botao.textContent = campoUrl.value ? "Trocar foto" : "Escolher foto";
+          if (status) status.textContent = "Não foi possível enviar a foto.";
+          mostrarToast(
+            "Erro ao enviar a foto: " +
+              (erro && erro.message ? erro.message : erro),
+            true
+          );
+          console.error(erro);
+        })
+        .finally(function () {
+          botao.disabled = false;
+          arquivo.value = "";
+        });
+    });
+
+    if (remover) {
+      remover.addEventListener("click", function () {
+        campoUrl.value = "";
+        atualizarPreviewFotoCabecalho("");
+        botao.textContent = "Escolher foto";
+        if (status) status.textContent = "Foto removida. Clique em Salvar alterações para publicar.";
+      });
+    }
+  }
 
   function wireEditorPagina() {
     var form = $("#form-pagina");
@@ -1133,6 +1260,38 @@
         destaque: "#1c1b18",
         textoDestaque: "#ffffff",
         raio: 18
+      },
+      lavanda: {
+        fundo: "#f5f0ff", fundoElevado: "#e9ddfa", texto: "#2f2145",
+        textoSecundario: "#756687", destaque: "#8d6cc7", textoDestaque: "#ffffff", raio: 28
+      },
+      ceu: {
+        fundo: "#eef7ff", fundoElevado: "#dceeff", texto: "#17324d",
+        textoSecundario: "#5f7488", destaque: "#4d91c6", textoDestaque: "#ffffff", raio: 22
+      },
+      solar: {
+        fundo: "#fff8dc", fundoElevado: "#ffedab", texto: "#392b18",
+        textoSecundario: "#77694d", destaque: "#e5a921", textoDestaque: "#241a0c", raio: 18
+      },
+      menta: {
+        fundo: "#edfff8", fundoElevado: "#d7f5e9", texto: "#173b31",
+        textoSecundario: "#5c766e", destaque: "#3aa982", textoDestaque: "#ffffff", raio: 26
+      },
+      terracota: {
+        fundo: "#fff1e9", fundoElevado: "#f4d8c9", texto: "#48271f",
+        textoSecundario: "#86665d", destaque: "#c86645", textoDestaque: "#ffffff", raio: 20
+      },
+      oceano: {
+        fundo: "#0e2635", fundoElevado: "#18394a", texto: "#f2fbff",
+        textoSecundario: "#a8c0ca", destaque: "#3dd4d0", textoDestaque: "#082129", raio: 24
+      },
+      noite: {
+        fundo: "#15131d", fundoElevado: "#24202f", texto: "#f8f4ff",
+        textoSecundario: "#bbb2c9", destaque: "#b892ff", textoDestaque: "#1a1029", raio: 28
+      },
+      cafe: {
+        fundo: "#241914", fundoElevado: "#38271f", texto: "#fff7ef",
+        textoSecundario: "#cfb9a8", destaque: "#d89964", textoDestaque: "#2b180f", raio: 18
       }
     };
 
@@ -1183,6 +1342,17 @@
     }
 
     var raiosEl = $("#admin-raios");
+    var texturasEl = $("#admin-texturas");
+
+    if (texturasEl) {
+      texturasEl.addEventListener("click", function (evento) {
+        var botao = evento.target.closest("[data-textura]");
+        if (!botao) return;
+        definirValor("pagina-textura-fundo", botao.dataset.textura);
+        marcarEscolha(texturasEl, botao);
+        atualizarPreviewAparencia();
+      });
+    }
 
     if (raiosEl) {
       raiosEl.addEventListener("click", function (evento) {
@@ -1235,6 +1405,12 @@
 
     atualizarEscolhaCor();
     atualizarEscolhaRaio();
+    if (texturasEl) {
+      var texturaAtual = valor("pagina-textura-fundo") || "nenhuma";
+      $all("[data-textura]", texturasEl).forEach(function (botao) {
+        botao.classList.toggle("is-selected", botao.dataset.textura === texturaAtual);
+      });
+    }
   }
 
   function marcarEscolha(container, escolhido) {
@@ -1250,6 +1426,11 @@
 
     var raiz = preview.contentDocument.documentElement;
     if (!raiz) return;
+
+    if (preview.contentDocument.body) {
+      preview.contentDocument.body.dataset.textura =
+        valor("pagina-textura-fundo") || "nenhuma";
+    }
 
     var raio = parseInt(valor("pagina-raio"), 10);
 
