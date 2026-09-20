@@ -1,0 +1,26 @@
+/* Movimento contínuo em qualquer tamanho de tela. O JavaScript inicia quando
+   a seção entra na área visível e pausa durante interação manual. */
+@media (min-width: 640px) {
+  .video-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 3.75rem) / 4);
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: none;
+  }
+
+  .servicos-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 2px) / 3);
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: none;
+  }
+
+  .video-grid::-webkit-scrollbar,
+  .servicos-grid::-webkit-scrollbar {
+    display: none;
+  }
+}
