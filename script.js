@@ -570,6 +570,9 @@
       );
     }
 
+    document.body.dataset.textura =
+      aparencia.texturaFundo || "nenhuma";
+
     definirVariavelNumero(
       raiz,
       "--radius-sm",
@@ -725,10 +728,29 @@
 
   function renderHeaderFooter() {
     var brand = $("#brand-nome");
+    var brandFoto = $("#brand-foto");
 
     if (brand) {
       brand.textContent =
         cfg.nome || "";
+    }
+
+    if (brandFoto) {
+      var fotoCabecalho =
+        cfg.header && cfg.header.foto
+          ? cfg.header.foto
+          : "";
+
+      brandFoto.hidden = !fotoCabecalho;
+
+      if (fotoCabecalho) {
+        brandFoto.src = fotoCabecalho;
+        brandFoto.alt =
+          "Foto de " + (cfg.nome || "creator");
+      } else {
+        brandFoto.removeAttribute("src");
+        brandFoto.alt = "";
+      }
     }
 
     var footerNome =
@@ -1552,7 +1574,6 @@
 
   function atualizarTimerVideos() {
     var grid = $("#video-grid");
-    var celular = window.matchMedia("(max-width: 639px)").matches;
     var reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var cards = grid
       ? Array.prototype.slice.call(
@@ -1563,7 +1584,6 @@
     var podeRodar =
       grid &&
       cards.length > 1 &&
-      celular &&
       !reduzirMovimento &&
       videosVisivel &&
       !document.hidden;
@@ -1833,12 +1853,10 @@
 
   function atualizarTimerServicos() {
     var grid = $("#servicos-grid");
-    var celular = window.matchMedia("(max-width: 639px)").matches;
     var reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var podeRodar =
       grid &&
       grid.children.length > 1 &&
-      celular &&
       !reduzirMovimento &&
       servicosVisivel &&
       !document.hidden;
