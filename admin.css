@@ -334,6 +334,53 @@ Este ficheiro trata apenas da apresentação.
   .admin-temas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
+.admin-tema:focus-visible,
+.admin-cores-letra button:focus-visible,
+.admin-raios button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.admin-texturas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.admin-texturas button {
+  padding: 0.45rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  text-align: left;
+}
+
+.admin-texturas button.is-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(157, 114, 93, 0.16);
+}
+
+.admin-texturas i {
+  display: block;
+  height: 48px;
+  margin-bottom: 0.4rem;
+  border-radius: 8px;
+  background-color: #f0e8dc;
+}
+
+.admin-texturas strong { font-size: 0.74rem; }
+.textura-lisa { background: #f0e8dc !important; }
+.textura-papel { background: #f0e8dc repeating-linear-gradient(0deg, transparent 0 3px, rgba(70,45,30,.07) 3px 4px) !important; }
+.textura-granulado { background: #f0e8dc radial-gradient(rgba(40,30,25,.18) .7px, transparent .8px) 0 0/4px 4px !important; }
+.textura-pontos { background: #f0e8dc radial-gradient(rgba(60,40,35,.24) 1.2px, transparent 1.3px) 0 0/10px 10px !important; }
+.textura-grade { background: #f0e8dc linear-gradient(rgba(60,40,35,.14) 1px, transparent 1px) 0 0/12px 12px, linear-gradient(90deg, rgba(60,40,35,.14) 1px, transparent 1px) 0 0/12px 12px !important; }
+.textura-aurora { background: radial-gradient(circle at 15% 20%, #ff7cae 0 18%, transparent 45%), radial-gradient(circle at 85% 75%, #6f8cff 0 22%, transparent 48%), #ffd45d !important; }
+
+@media (min-width: 640px) {
+  .admin-texturas { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
 /* Range */
 
 .admin-campo input[type="range"] {
@@ -446,6 +493,46 @@ Este ficheiro trata apenas da apresentação.
   color: var(--text-muted);
 
   margin-bottom: 1rem;
+}
+
+.admin-foto-cabecalho-linha {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.35rem;
+}
+
+.admin-foto-cabecalho-preview {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px dashed var(--border-strong);
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.admin-foto-cabecalho-preview img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.admin-foto-cabecalho-preview img[hidden],
+.admin-foto-cabecalho-preview span[hidden] {
+  display: none;
+}
+
+.admin-foto-cabecalho-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
 }
 
 .admin-vazio {
