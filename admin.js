@@ -47,6 +47,7 @@
     wireAdicionar();
     wireEditorPagina();
     wireFotoCabecalho();
+    wireUploadsFotosPagina();
     wireAparencia();
 
     sb.auth.getSession().then(function (resposta) {
@@ -1137,6 +1138,58 @@
         if (status) status.textContent = "Foto removida. Clique em Salvar alterações para publicar.";
       });
     }
+  }
+
+  function wireUploadsFotosPagina() {
+    $all("[data-upload-foto]").forEach(function (botao) {
+      var campo = $("#" + botao.dataset.uploadFoto);
+      var arquivo = $("#" + botao.dataset.inputArquivo);
+
+      if (!campo || !arquivo) return;
+
+      botao.addEventListener("click", function () {
+        arquivo.click();
+      });
+
+      arquivo.addEventListener("change", function () {
+        var file = arquivo.files && arquivo.files[0];
+        if (!file) return;
+
+        if (!file.type || file.type.indexOf("image/") !== 0) {
+          mostrarToast("Escolha um arquivo de imagem.", true);
+          arquivo.value = "";
+          return;
+        }
+
+        if (file.size > 8 * 1024 * 1024) {
+          mostrarToast("A imagem deve ter no máximo 8 MB.", true);
+          arquivo.value = "";
+          return;
+        }
+
+        var textoOriginal = botao.textContent;
+        var caminho = gerarNomeArquivo("perfil", file);
+        botao.disabled = true;
+        botao.textContent = "Enviando...";
+
+        sb.storage.from(BUCKET).upload(caminho, file, {
+          cacheControl: "3600",
+          upsert: false
+        }).then(function (resposta) {
+          if (resposta.error) throw resposta.error;
+          var url = obterUrlPublica(caminho);
+          if (!url) throw new Error("Não foi possível obter a URL da foto.");
+          campo.value = url;
+          mostrarToast("Foto enviada. Clique em Salvar alterações.");
+        }).catch(function (erro) {
+          mostrarToast("Erro ao enviar a foto: " + (erro.message || erro), true);
+        }).finally(function () {
+          botao.disabled = false;
+          botao.textContent = textoOriginal;
+          arquivo.value = "";
+        });
+      });
+    });
   }
 
   function wireEditorPagina() {
