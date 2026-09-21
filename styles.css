@@ -80,6 +80,12 @@ body[data-textura="granulado"] { background-image: radial-gradient(color-mix(in 
 body[data-textura="pontos"] { background-image: radial-gradient(color-mix(in srgb, var(--text) 14%, transparent) 1.2px, transparent 1.3px); background-size: 12px 12px; }
 body[data-textura="grade"] { background-image: linear-gradient(color-mix(in srgb, var(--text) 11%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--text) 11%, transparent) 1px, transparent 1px); background-size: 18px 18px; }
 body[data-textura="aurora"] { background-image: radial-gradient(circle at 10% 15%, rgba(255,79,154,.34) 0 10%, transparent 35%), radial-gradient(circle at 90% 80%, rgba(69,109,255,.32) 0 12%, transparent 38%), radial-gradient(circle at 55% 35%, rgba(255,229,79,.3) 0 8%, transparent 30%); background-attachment: fixed; }
+body[data-textura="por-do-sol"] { background-image: linear-gradient(135deg, rgba(255,207,112,.82), rgba(255,117,151,.62) 48%, rgba(139,114,255,.58)); background-attachment: fixed; }
+body[data-textura="oceano-vivo"] { background-image: radial-gradient(circle at 20% 15%, rgba(112,240,255,.7), transparent 38%), radial-gradient(circle at 85% 75%, rgba(118,93,255,.55), transparent 44%), linear-gradient(145deg, var(--bg), rgba(33,183,168,.5)); background-attachment: fixed; }
+body[data-textura="doce"] { background-image: radial-gradient(circle at 12% 82%, rgba(255,151,205,.42), transparent 40%), radial-gradient(circle at 85% 18%, rgba(155,132,255,.4), transparent 42%), radial-gradient(circle at 50% 50%, rgba(255,231,122,.34), transparent 46%); background-attachment: fixed; }
+body[data-textura="neon"] { background-image: radial-gradient(circle at 18% 18%, rgba(255,63,186,.6), transparent 35%), radial-gradient(circle at 82% 72%, rgba(0,234,208,.55), transparent 40%), linear-gradient(145deg, var(--bg), rgba(61,24,105,.62)); background-attachment: fixed; }
+body[data-textura="ondas"] { background-image: repeating-radial-gradient(ellipse at 0 100%, transparent 0 24px, color-mix(in srgb, var(--text) 9%, transparent) 25px 28px); background-attachment: fixed; }
+body[data-textura="confete"] { background-image: radial-gradient(circle, rgba(255,79,154,.55) 0 2px, transparent 2.5px), radial-gradient(circle, rgba(70,95,255,.42) 0 1.5px, transparent 2px); background-position: 0 0, 9px 11px; background-size: 22px 22px, 25px 25px; }
 
 /* Carrosséis contínuos: começam ao entrar na área visível, sem interação. */
 @media (min-width: 640px) {
@@ -251,7 +257,7 @@ h1, h2, h3, h4 {
   gap: 0.75rem;
   max-width: calc(var(--container-w) - 2rem);
   margin-inline: auto;
-  background: var(--bg-elevated);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   padding: 0.5rem 0.5rem 0.5rem 1.35rem;
