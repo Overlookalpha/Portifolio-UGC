@@ -1544,7 +1544,13 @@
           evento,
           function () {
             videosMovimentoAutomatico = false;
-            videosPausaAte = Infinity;
+            /*
+              No celular alguns navegadores não enviam touchend/pointerup
+              quando o gesto vira rolagem vertical. Uma pausa infinita fazia
+              o carrossel nunca mais voltar a andar. A pausa com tempo garante
+              que ele retome sozinho mesmo nesses casos.
+            */
+            videosPausaAte = Date.now() + 1200;
           },
           { passive: true }
         );
@@ -1554,7 +1560,7 @@
         grid.addEventListener(
           evento,
           function () {
-            videosPausaAte = Date.now() + 1000;
+            videosPausaAte = Date.now() + 800;
           },
           { passive: true }
         );
@@ -1568,7 +1574,7 @@
             );
             atualizarTimerVideos();
           },
-          { threshold: 0.25 }
+          { threshold: 0.08 }
         ).observe(grid);
       } else {
         videosVisivel = true;
@@ -1822,7 +1828,7 @@
           evento,
           function () {
             servicosMovimentoAutomatico = false;
-            servicosPausaAte = Infinity;
+            servicosPausaAte = Date.now() + 1200;
           },
           { passive: true }
         );
@@ -1832,7 +1838,7 @@
         grid.addEventListener(
           evento,
           function () {
-            servicosPausaAte = Date.now() + 1000;
+            servicosPausaAte = Date.now() + 800;
           },
           { passive: true }
         );
@@ -1847,7 +1853,7 @@
 
             atualizarTimerServicos();
           },
-          { threshold: 0.25 }
+          { threshold: 0.08 }
         ).observe(grid);
       } else {
         servicosVisivel = true;
