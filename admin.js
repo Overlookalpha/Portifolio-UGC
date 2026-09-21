@@ -2301,7 +2301,7 @@
                 ".jpg";
 
               var caminhoThumb =
-                "videos/thumbs/" +
+                portfolioId() + "/videos/thumbs/" +
                 nomeThumb;
 
               return sb.storage
@@ -2557,7 +2557,7 @@
                 ".jpg";
 
               var caminhoThumb =
-                "videos/thumbs/" +
+                portfolioId() + "/videos/thumbs/" +
                 nomeThumb;
 
               return sb.storage
