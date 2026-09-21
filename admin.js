@@ -310,7 +310,10 @@
     var preview = $("#preview-site");
     var abrir = $(".admin-preview-top a[target='_blank']");
 
-    if (preview && portfolioId()) preview.src = url;
+    if (preview && portfolioId()) {
+      preview.classList.remove("is-ready");
+      if (preview.getAttribute("src") !== url) preview.src = url;
+    }
     if (abrir && portfolioId()) abrir.href = url;
   }
 
@@ -1267,6 +1270,7 @@
           var preview = $("#preview-site");
 
           if (preview) {
+            preview.classList.remove("is-ready");
             preview.src =
               urlPortfolioPublico() + "&atualizado=" +
               Date.now();
@@ -1467,7 +1471,15 @@
     });
 
     var preview = $("#preview-site");
-    if (preview) preview.addEventListener("load", atualizarPreviewAparencia);
+    if (preview) preview.addEventListener("load", function () {
+      atualizarPreviewAparencia();
+
+      if (preview.getAttribute("src") !== "about:blank") {
+        window.requestAnimationFrame(function () {
+          preview.classList.add("is-ready");
+        });
+      }
+    });
 
     function atualizarEscolhaCor() {
       var atual = valor("pagina-cor-texto").toLowerCase();

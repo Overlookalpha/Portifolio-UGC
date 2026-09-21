@@ -841,6 +841,14 @@ No desktop, grupos de dois campos ficam lado a lado.
   border: 0;
 
   background: var(--bg);
+
+  opacity: 0;
+
+  transition: opacity 180ms ease;
+}
+
+#preview-site.is-ready {
+  opacity: 1;
 }
 
 /* ================================================================== */
