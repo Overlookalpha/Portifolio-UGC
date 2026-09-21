@@ -21,6 +21,7 @@
 
   var cfg = window.SITE_CONFIG || {};
   var clienteSupabase = null;
+  var portfolioPublicoId = new URLSearchParams(window.location.search).get("cliente") || "";
 
   document.addEventListener("DOMContentLoaded", init);
 
@@ -56,8 +57,9 @@
     setupInstallPrompt();
     registrarServiceWorker();
 
-    atualizarMidiasComSupabase();
-    atualizarConteudoComSupabase();
+    atualizarConteudoComSupabase().then(function () {
+      atualizarMidiasComSupabase();
+    });
   }
 
   // --------------------------------------------------------------------------
@@ -226,13 +228,17 @@
   function atualizarConteudoComSupabase() {
     var cliente = criarClienteSupabase();
 
-    if (!cliente) return;
+    if (!cliente) return Promise.resolve();
 
-    cliente
+    var consulta = cliente
       .from("conteudo_site")
-      .select("dados")
-      .eq("id", "principal")
-      .maybeSingle()
+      .select("dados,owner_id");
+
+    consulta = portfolioPublicoId
+      ? consulta.eq("owner_id", portfolioPublicoId)
+      : consulta.eq("id", "principal");
+
+    return consulta.maybeSingle()
       .then(function (resposta) {
         if (
           resposta.error ||
@@ -241,6 +247,8 @@
         ) {
           return;
         }
+
+        portfolioPublicoId = resposta.data.owner_id || portfolioPublicoId;
 
         mesclarConfiguracao(
           resposta.data.dados
@@ -372,6 +380,7 @@
     return cliente
       .from("midias")
       .select("*")
+      .eq("owner_id", portfolioPublicoId)
       .order("ordem", {
         ascending: true
       })
