@@ -14,7 +14,7 @@
   ============================================================================
 */
 
-var CACHE_VERSAO = "v7";
+var CACHE_VERSAO = "v8";
 var CACHE_ESSENCIAL = "ugc-portfolio-essencial-" + CACHE_VERSAO;
 var CACHE_RUNTIME = "ugc-portfolio-runtime-" + CACHE_VERSAO;
 
@@ -23,6 +23,10 @@ var CACHE_RUNTIME = "ugc-portfolio-runtime-" + CACHE_VERSAO;
 var ARQUIVOS_ESSENCIAIS = [
   "./",
   "index.html",
+  "loja.html",
+  "loja.css",
+  "loja.js",
+  "marketplace.webmanifest",
   "styles.css",
   "carousel-overrides.css",
   "script.js",
@@ -79,7 +83,9 @@ self.addEventListener("fetch", function (evento) {
   if (requisicao.mode === "navigate") {
     evento.respondWith(
       fetch(requisicao).catch(function () {
-        return caches.match("index.html");
+        return caches.match(requisicao).then(function (resposta) {
+          return resposta || caches.match("index.html");
+        });
       })
     );
     return;
