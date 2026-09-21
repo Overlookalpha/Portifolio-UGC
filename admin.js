@@ -14,6 +14,8 @@
   var cfg = window.SITE_CONFIG || {};
   var sb = null;
   var BUCKET = "midias";
+  var usuarioAtual = null;
+  var conteudoRowId = null;
 
   var cache = {
     videos: [],
@@ -57,6 +59,7 @@
           : null;
 
       if (sessao) {
+        usuarioAtual = sessao.user;
         entrarNoPainel();
       } else {
         mostrarLogin();
@@ -65,8 +68,10 @@
 
     sb.auth.onAuthStateChange(function (_evento, sessao) {
       if (sessao) {
+        usuarioAtual = sessao.user;
         entrarNoPainel();
       } else {
+        usuarioAtual = null;
         mostrarLogin();
       }
     });
@@ -286,8 +291,27 @@
     if (login) login.hidden = true;
     if (painel) painel.hidden = false;
 
+    atualizarLinksPortfolio();
+
     carregarMidias();
     carregarConteudoPagina();
+  }
+
+  function portfolioId() {
+    return usuarioAtual && usuarioAtual.id ? usuarioAtual.id : "";
+  }
+
+  function urlPortfolioPublico() {
+    return "index.html?cliente=" + encodeURIComponent(portfolioId());
+  }
+
+  function atualizarLinksPortfolio() {
+    var url = urlPortfolioPublico();
+    var preview = $("#preview-site");
+    var abrir = $(".admin-preview-top a[target='_blank']");
+
+    if (preview && portfolioId()) preview.src = url;
+    if (abrir && portfolioId()) abrir.href = url;
   }
 
   /* ========================================================================
@@ -329,8 +353,8 @@
 
   function carregarConteudoPagina() {
     sb.from("conteudo_site")
-      .select("dados")
-      .eq("id", "principal")
+      .select("id,dados")
+      .eq("owner_id", portfolioId())
       .maybeSingle()
       .then(function (resposta) {
         var base = dadosPadraoPagina();
@@ -340,12 +364,14 @@
           resposta.data &&
           resposta.data.dados
         ) {
+          conteudoRowId = resposta.data.id;
           base = mesclarProfundo(
             base,
             resposta.data.dados
           );
         }
 
+        conteudoRowId = conteudoRowId || portfolioId();
         conteudoAtual = base;
 
         preencherEditorPagina(conteudoAtual);
@@ -1089,7 +1115,7 @@
         return;
       }
 
-      var caminho = gerarNomeArquivo("perfil", file);
+      var caminho = gerarNomeArquivo(portfolioId() + "/perfil", file);
 
       botao.disabled = true;
       botao.textContent = "Enviando...";
@@ -1168,7 +1194,7 @@
         }
 
         var textoOriginal = botao.textContent;
-        var caminho = gerarNomeArquivo("perfil", file);
+        var caminho = gerarNomeArquivo(portfolioId() + "/perfil", file);
         botao.disabled = true;
         botao.textContent = "Enviando...";
 
@@ -1215,7 +1241,8 @@
       sb.from("conteudo_site")
         .upsert(
           {
-            id: "principal",
+            id: conteudoRowId || portfolioId(),
+            owner_id: portfolioId(),
             dados: dados,
             atualizado_em:
               new Date().toISOString()
@@ -1241,7 +1268,7 @@
 
           if (preview) {
             preview.src =
-              "index.html?atualizado=" +
+              urlPortfolioPublico() + "&atualizado=" +
               Date.now();
           }
 
@@ -1518,6 +1545,7 @@
   function carregarMidias() {
     sb.from("midias")
       .select("*")
+      .eq("owner_id", portfolioId())
       .order("ordem", {
         ascending: true
       })
@@ -2204,7 +2232,7 @@
 
     var caminhoArquivo =
       gerarNomeArquivo(
-        pastaArquivo,
+        portfolioId() + "/" + pastaArquivo,
         file
       );
 
@@ -2318,6 +2346,7 @@
       )
       .then(function (urls) {
         var novoItem = {
+          owner_id: portfolioId(),
           tipo: tipo,
 
           titulo: file.name
@@ -2447,7 +2476,7 @@
 
     var caminhoArquivo =
       gerarNomeArquivo(
-        pastaArquivo,
+        portfolioId() + "/" + pastaArquivo,
         file
       );
 
